@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///C:/Users/zwd89/Downloads/recipe-app_2.html -->
+<!-- saved from url=(0050)file:///C:/Users/zwd89/Downloads/recipe-app_4.html -->
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -268,34 +268,18 @@ html, body {
 
 /* ===== RECIPE CARD ===== */
 .card-wrapper {
-  perspective: 1000px;
   height: 220px;
   cursor: pointer;
-}
-.recipe-grid.single-col .card-wrapper { height: 280px; }
-
-.card-inner {
-  position: relative;
-  width: 100%; height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: var(--radius);
-}
-.card-inner.flipped { transform: rotateY(180deg); }
-
-.card-front, .card-back {
-  position: absolute; inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-}
-
-/* FRONT */
-.card-front {
+  position: relative;
   background: var(--warm2);
+  transition: transform 0.15s;
 }
+.card-wrapper:active { transform: scale(0.97); }
+.recipe-grid.single-col .card-wrapper { height: 280px; }
+
 .card-img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -313,7 +297,7 @@ html, body {
 
 .card-overlay {
   position: absolute; bottom: 0; left: 0; right: 0;
-  background: linear-gradient(transparent, rgba(40,20,5,0.72));
+  background: linear-gradient(transparent, rgba(40,20,5,0.75));
   padding: 28px 12px 12px;
 }
 .card-name {
@@ -341,17 +325,18 @@ html, body {
 
 .card-fav {
   position: absolute; top: 8px; right: 8px;
-  width: 32px; height: 32px;
+  width: 40px; height: 40px;
   border-radius: 50%;
   border: none;
   background: rgba(255,255,255,0.25);
   backdrop-filter: blur(8px);
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
-  z-index: 5;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
 }
 .card-fav.active { background: rgba(220,50,50,0.8); }
 .card-fav:active { transform: scale(0.85); }
@@ -367,33 +352,148 @@ html, body {
   z-index: 5;
 }
 
-/* BACK */
-.card-back {
-  transform: rotateY(180deg);
-  background: var(--card-bg);
-  padding: 14px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+/* ===== DETAIL PAGE ===== */
+#page-detail {
+  background: var(--cream);
 }
-.back-name {
+.detail-img-area {
+  position: relative;
+  width: 100%;
+  height: 55vw; max-height: 320px; min-height: 200px;
+  background: var(--warm2);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.detail-img-area img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0; transition: opacity 0.35s;
+  user-select: none;
+}
+.detail-img-area img.active { opacity: 1; }
+.detail-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: var(--warm4); font-size: 52px; gap: 8px;
+}
+.detail-img-placeholder span { font-size: 14px; color: var(--text-mid); }
+.detail-swipe-hint {
+  position: absolute; bottom: 10px; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 6px; z-index: 3;
+}
+.detail-swipe-hint span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  transition: background 0.2s, transform 0.2s;
+}
+.detail-swipe-hint span.active { background: white; transform: scale(1.3); }
+
+.detail-back-btn {
+  position: absolute; top: 12px; left: 12px;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(8px);
+  color: white; font-size: 18px;
+  cursor: pointer; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.detail-back-btn:active { background: rgba(255,255,255,0.4); }
+
+.detail-fav-btn {
+  position: absolute; top: 12px; right: 12px;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(8px);
+  color: white; font-size: 18px;
+  cursor: pointer; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.detail-fav-btn.active { background: rgba(220,50,50,0.75); }
+
+.detail-body {
+  padding: 18px 16px;
+  padding-bottom: calc(var(--nav-h) + 20px);
+}
+.detail-name {
   font-family: 'Noto Serif SC', serif;
-  font-size: 16px; font-weight: 700;
-  color: var(--warm4);
-  margin-bottom: 8px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--warm1);
-}
-.back-meta {
-  display: flex; gap: 10px;
+  font-size: 22px; font-weight: 700;
+  color: var(--text-dark);
   margin-bottom: 10px;
-  flex-wrap: wrap;
+  line-height: 1.3;
 }
-.back-meta-item {
+.detail-meta {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 14px;
+}
+.detail-meta-chip {
   display: flex; align-items: center; gap: 4px;
-  font-size: 11px; color: var(--text-mid);
+  font-size: 12px; color: var(--text-mid);
   background: var(--warm1);
-  padding: 3px 8px; border-radius: 10px;
+  padding: 5px 12px; border-radius: 20px;
+  font-weight: 500;
 }
+.detail-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 16px;
+}
+.detail-tag {
+  font-size: 11px;
+  background: var(--warm0);
+  border: 1px solid var(--warm2);
+  color: var(--text-mid);
+  padding: 3px 10px; border-radius: 12px;
+}
+.detail-section-title {
+  font-size: 11px; font-weight: 700;
+  color: var(--warm3);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin: 16px 0 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.detail-section-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--warm1);
+}
+.detail-ingredients {
+  font-size: 14px; color: var(--text-mid);
+  line-height: 1.8;
+  background: var(--warm0);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  white-space: pre-wrap;
+}
+.detail-steps {
+  font-size: 14px; color: var(--text-dark);
+  line-height: 1.9;
+  white-space: pre-wrap;
+}
+.detail-notes {
+  margin-top: 14px;
+  font-size: 13px; color: var(--text-mid);
+  font-style: italic;
+  background: var(--warm0);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--warm2);
+}
+.detail-actions {
+  display: flex; gap: 10px; margin-top: 20px;
+}
+.detail-action-btn {
+  flex: 1; padding: 13px;
+  border-radius: var(--radius-sm); border: none;
+  font-size: 14px; font-weight: 600;
+  font-family: 'Noto Sans SC', sans-serif;
+  cursor: pointer; transition: all 0.15s;
+}
+.detail-action-btn.edit { background: var(--warm1); color: var(--warm4); }
+.detail-action-btn.delete { background: #fff0f0; color: var(--red); }
+.detail-action-btn:active { transform: scale(0.97); }
+
 .back-section-title {
   font-size: 12px; font-weight: 600;
   color: var(--warm3);
@@ -1260,13 +1360,6 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
         </div>
 
         <div style="margin-top:12px">
-          <div class="form-section-title" style="margin-bottom:8px">🔗 从链接导入</div>
-          <div class="import-row">
-            <input type="text" class="form-input" id="import-url" placeholder="粘贴菜谱链接...">
-            <button class="import-btn" onclick="importFromURL()">导入</button>
-          </div>
-        </div>
-        <div style="margin-top:12px">
           <div class="form-section-title" style="margin-bottom:8px">🎤 语音填写</div>
           <div class="voice-section">
             <button class="big-mic-btn" id="add-mic-btn" onclick="toggleAddMic()">🎤</button>
@@ -1452,6 +1545,16 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
       </div>
     </div>
 
+    <!-- DETAIL -->
+    <div class="page" id="page-detail">
+      <div class="detail-img-area" id="detail-img-area">
+        <button class="detail-back-btn" onclick="closeDetail()">‹</button>
+        <button class="detail-fav-btn" id="detail-fav-btn" onclick="toggleDetailFav()">♥</button>
+        <div class="detail-swipe-hint" id="detail-dots"></div>
+      </div>
+      <div class="detail-body" id="detail-body"></div>
+    </div>
+
   </div><!-- /pages -->
 
   <!-- BOTTOM NAV -->
@@ -1480,7 +1583,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 <div id="lightbox" onclick="closeLightbox(event)">
   <button id="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-nav" id="lightbox-prev" onclick="lightboxNav(-1,event)">‹</button>
-  <img id="lightbox-img" src="file:///C:/Users/zwd89/Downloads/recipe-app_2.html">
+  <img id="lightbox-img" src="file:///C:/Users/zwd89/Downloads/recipe-app_4.html">
   <div id="lightbox-name"></div>
   <div id="lightbox-dots"></div>
   <div id="lightbox-hint">点击图片外关闭</div>
@@ -1529,7 +1632,7 @@ function goToPage(page) {
   document.getElementById('page-' + page).classList.add('active');
   document.getElementById('nav-' + page).classList.add('active');
 
-  const titles = { home: '🍱 今天吃什么', ai: '🤖 AI 推荐', add: editingId ? '✏️ 编辑菜谱' : '➕ 添加菜谱', settings: '⚙️ 设置' };
+  const titles = { home: '🍱 今天吃什么', ai: '🤖 AI 推荐', add: editingId ? '✏️ 编辑菜谱' : '➕ 添加菜谱', settings: '⚙️ 设置', detail: '' };
   document.getElementById('header-title').textContent = titles[page];
 
   if (page === 'settings') updateStats();
@@ -1610,46 +1713,20 @@ function cardHTML(r) {
   let imgHTML;
   if (imgs.length === 0) {
     imgHTML = `<div class="card-img-placeholder"><span>${getCookingEmoji(r.methods)}</span><span>${r.name}</span></div>`;
-  } else if (imgs.length === 1) {
-    imgHTML = `<img class="card-img" src="${imgs[0]}" alt="${r.name}" loading="lazy">`;
   } else {
-    const slides = imgs.map((src, i) => `<img src="${src}" class="${i===0?'active':''}"></img>`).join('');
-    const dots = imgs.map((_, i) => `<span class="slider-dot ${i===0?'active':''}"></span>`).join('');
-    imgHTML = `<div class="card-img-slider" id="slider-${r.id}" onclick="advanceSlider(\'${r.id}\',event)">${slides}<div class="slider-dots">${dots}</div></div>`;
+    imgHTML = `<img class="card-img" src="${imgs[0]}" alt="${r.name}" loading="lazy">`;
   }
-
   const mealLabel = r.meal === 'breakfast' ? '早饭' : r.meal === 'dinner' ? '晚饭' : '早/晚';
-  const tagsHTML = (r.tags || []).slice(0,3).map(t => `<span class="card-tag">${t}</span>`).join('');
+  const tagsHTML = (r.tags || []).slice(0,2).map(t => `<span class="card-tag">${t}</span>`).join('');
   const methodsHTML = (r.methods || []).slice(0,2).map(m => `<span class="card-tag">${m}</span>`).join('');
 
-  const backMeta = [
-    r.time ? `⏱ ${r.time}分钟` : null,
-    r.difficulty ? {easy:'⭐ 简单',medium:'⭐⭐ 中等',hard:'⭐⭐⭐ 复杂'}[r.difficulty] : null,
-    r.taste ? `${r.taste}` : null,
-  ].filter(Boolean).map(m => `<span class="back-meta-item">${m}</span>`).join('');
-
-  return `<div class="card-wrapper" id="card-${r.id}">
-    <div class="card-inner" id="inner-${r.id}">
-      <div class="card-front">
-        ${imgHTML}
-        <span class="card-meal-badge">${mealLabel}</span>
-        <button class="card-fav ${favClass}" onclick="toggleFav('${r.id}',event)">♥</button>
-        <div class="card-overlay">
-          <div class="card-name">${r.name}</div>
-          <div class="card-tags">${methodsHTML}${tagsHTML}</div>
-        </div>
-      </div>
-      <div class="card-back">
-        <div class="back-name">${r.name}</div>
-        <div class="back-meta">${backMeta}</div>
-        ${r.ingredients ? `<div class="back-section-title">食材</div><div class="back-ingredients">${r.ingredients}</div>` : ''}
-        ${r.steps ? `<div class="back-section-title">做法</div><div class="back-steps">${r.steps}</div>` : ''}
-        ${r.notes ? `<div class="back-notes">💡 ${r.notes}</div>` : ''}
-        <div class="card-back-actions">
-          <button class="back-btn edit" onclick="editRecipe('${r.id}',event)">✏️ 编辑</button>
-          <button class="back-btn delete" onclick="deleteRecipe('${r.id}',event)">🗑️ 删除</button>
-        </div>
-      </div>
+  return `<div class="card-wrapper" id="card-${r.id}" onclick="openDetail('${r.id}')">
+    ${imgHTML}
+    <span class="card-meal-badge">${mealLabel}</span>
+    <button class="card-fav ${favClass}" onclick="toggleFav('${r.id}',event)">♥</button>
+    <div class="card-overlay">
+      <div class="card-name">${r.name}</div>
+      <div class="card-tags">${methodsHTML}${tagsHTML}</div>
     </div>
   </div>`;
 }
@@ -1675,52 +1752,129 @@ function getCookingEmoji(methods) {
   return map[methods[0]] || '🍽️';
 }
 
-// Card click: image area -> lightbox, other area -> flip
-document.addEventListener('click', e => {
-  const wrapper = e.target.closest('.card-wrapper');
-  if (!wrapper) return;
-  if (e.target.closest('.card-fav') || e.target.closest('.back-btn')) return;
-  if (e.target.closest('.card-img-slider')) return; // slider handles its own click
-  const inner = wrapper.querySelector('.card-inner');
-  const isFlipped = inner.classList.contains('flipped');
-  // If on front, click image area -> lightbox; click overlay/name -> flip
-  if (!isFlipped) {
-    const onImg = e.target.closest('.card-img') || e.target.closest('.card-img-slider') || e.target.tagName === 'IMG';
-    if (onImg || e.target.closest('.card-front') && !e.target.closest('.card-overlay')) {
-      // open lightbox
-      const recipeId = wrapper.id.replace('card-', '');
-      openLightbox(recipeId);
-      return;
-    }
-  }
-  inner.classList.toggle('flipped');
-});
+// ============ DETAIL PAGE ============
+let detailRecipeId = null;
+let detailImgIndex = 0;
+let touchStartX = 0;
 
-// Lightbox state
-let lightboxRecipeId = null;
-let lightboxImgIndex = 0;
-
-function openLightbox(id) {
+function openDetail(id) {
   const r = recipes.find(r => r.id === id);
   if (!r) return;
+  detailRecipeId = id;
+  detailImgIndex = 0;
+
+  // Images
   const imgs = r.imgs && r.imgs.length > 0 ? r.imgs : (r.img ? [r.img] : []);
-  if (imgs.length === 0) return;
-  lightboxRecipeId = id;
-  lightboxImgIndex = 0;
-  document.getElementById('lightbox-name').textContent = r.name;
-  updateLightboxImg(imgs);
-  document.getElementById('lightbox-prev').style.display = imgs.length > 1 ? 'flex' : 'none';
-  document.getElementById('lightbox-next').style.display = imgs.length > 1 ? 'flex' : 'none';
-  document.getElementById('lightbox').classList.add('show');
-  document.body.style.overflow = 'hidden';
+  const imgArea = document.getElementById('detail-img-area');
+
+  // Remove old imgs
+  imgArea.querySelectorAll('img').forEach(el => el.remove());
+  imgArea.querySelector('.detail-img-placeholder')?.remove();
+
+  if (imgs.length === 0) {
+    const ph = document.createElement('div');
+    ph.className = 'detail-img-placeholder';
+    ph.innerHTML = `<span>${getCookingEmoji(r.methods)}</span><span>${r.name}</span>`;
+    imgArea.insertBefore(ph, imgArea.querySelector('.detail-swipe-hint'));
+  } else {
+    imgs.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.src = src;
+      if (i === 0) img.classList.add('active');
+      imgArea.insertBefore(img, imgArea.querySelector('.detail-swipe-hint'));
+    });
+  }
+
+  // Dots
+  const dotsEl = document.getElementById('detail-dots');
+  dotsEl.innerHTML = imgs.length > 1 ? imgs.map((_, i) =>
+    `<span class="${i===0?'active':''}"></span>`).join('') : '';
+
+  // Fav button
+  const favBtn = document.getElementById('detail-fav-btn');
+  favBtn.classList.toggle('active', !!r.favorite);
+
+  // Body
+  const diffMap = {easy:'⭐ 简单', medium:'⭐⭐ 中等', hard:'⭐⭐⭐ 复杂'};
+  const mealLabel = r.meal === 'breakfast' ? '☀️ 早饭' : r.meal === 'dinner' ? '🌙 晚饭' : '☀️🌙 两餐';
+  const metaChips = [
+    mealLabel,
+    r.time ? `⏱ ${r.time}分钟` : null,
+    r.difficulty ? diffMap[r.difficulty] : null,
+    r.taste ? `🌶 ${r.taste}` : null,
+    ...(r.methods||[]).map(m => `🍳 ${m}`),
+  ].filter(Boolean).map(m => `<span class="detail-meta-chip">${m}</span>`).join('');
+
+  const tagsHTML = (r.tags||[]).length ? `<div class="detail-tags">${r.tags.map(t=>`<span class="detail-tag">${t}</span>`).join('')}</div>` : '';
+
+  document.getElementById('detail-body').innerHTML = `
+    <div class="detail-name">${r.name}</div>
+    <div class="detail-meta">${metaChips}</div>
+    ${tagsHTML}
+    ${r.ingredients ? `<div class="detail-section-title">食材</div><div class="detail-ingredients">${r.ingredients}</div>` : ''}
+    ${r.steps ? `<div class="detail-section-title">做法</div><div class="detail-steps">${r.steps}</div>` : ''}
+    ${r.notes ? `<div class="detail-notes">💡 ${r.notes}</div>` : ''}
+    <div class="detail-actions">
+      <button class="detail-action-btn edit" onclick="editFromDetail()">✏️ 编辑</button>
+      <button class="detail-action-btn delete" onclick="deleteFromDetail()">🗑️ 删除</button>
+    </div>
+  `;
+
+  // Swipe support
+  imgArea.ontouchstart = e => { touchStartX = e.touches[0].clientX; };
+  imgArea.ontouchend = e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) detailNavImg(dx < 0 ? 1 : -1);
+  };
+
+  goToPage('detail');
+  document.getElementById('header-title').textContent = '';
 }
 
-function updateLightboxImg(imgs) {
-  document.getElementById('lightbox-img').src = imgs[lightboxImgIndex];
-  const dotsEl = document.getElementById('lightbox-dots');
-  dotsEl.innerHTML = imgs.length > 1 ? imgs.map((_, i) =>
-    `<span class="${i===lightboxImgIndex?'active':''}" onclick="lightboxGoTo(${i},event)"></span>`
-  ).join('') : '';
+function detailNavImg(dir) {
+  const r = recipes.find(r => r.id === detailRecipeId);
+  if (!r) return;
+  const imgs = r.imgs && r.imgs.length > 0 ? r.imgs : (r.img ? [r.img] : []);
+  if (imgs.length <= 1) return;
+  const imgEls = document.getElementById('detail-img-area').querySelectorAll('img');
+  const dots = document.getElementById('detail-dots').querySelectorAll('span');
+  imgEls[detailImgIndex].classList.remove('active');
+  dots[detailImgIndex]?.classList.remove('active');
+  detailImgIndex = (detailImgIndex + dir + imgs.length) % imgs.length;
+  imgEls[detailImgIndex].classList.add('active');
+  dots[detailImgIndex]?.classList.add('active');
+}
+
+function closeDetail() {
+  goToPage('home');
+}
+
+function toggleDetailFav() {
+  const r = recipes.find(r => r.id === detailRecipeId);
+  if (!r) return;
+  r.favorite = !r.favorite;
+  save();
+  const btn = document.getElementById('detail-fav-btn');
+  btn.classList.toggle('active', r.favorite);
+  showToast(r.favorite ? '已收藏 ❤️' : '已取消收藏');
+}
+
+function editFromDetail() {
+  editRecipe(detailRecipeId, new Event('click'));
+}
+
+function deleteFromDetail() {
+  if (!confirm('确定要删除这个菜谱吗？')) return;
+  recipes = recipes.filter(r => r.id !== detailRecipeId);
+  save();
+  closeDetail();
+  renderGrid();
+  showToast('已删除');
+}
+
+// scrollToCard from AI page
+function scrollToCard(id) {
+  openDetail(id);
 }
 
 function lightboxNav(dir, e) {
@@ -1761,7 +1915,7 @@ function lightboxFlipToRecipe() {
 
 // ============ FAVORITE ============
 function toggleFav(id, e) {
-  e.stopPropagation();
+  if (e && e.stopPropagation) e.stopPropagation();
   const r = recipes.find(r => r.id === id);
   if (!r) return;
   r.favorite = !r.favorite;
@@ -1772,7 +1926,7 @@ function toggleFav(id, e) {
 
 // ============ DELETE ============
 function deleteRecipe(id, e) {
-  e.stopPropagation();
+  if (e && e.stopPropagation) e.stopPropagation();
   if (!confirm('确定要删除这个菜谱吗？')) return;
   recipes = recipes.filter(r => r.id !== id);
   save();
@@ -1782,7 +1936,7 @@ function deleteRecipe(id, e) {
 
 // ============ EDIT ============
 function editRecipe(id, e) {
-  e.stopPropagation();
+  if (e && e.stopPropagation) e.stopPropagation();
   const r = recipes.find(r => r.id === id);
   if (!r) return;
   editingId = id;
@@ -2051,9 +2205,15 @@ function extractIngredientNames(text) {
   }).filter(s => s.length >= 1 && s.length <= 10);
 }
 
+let isSaving = false;
 function saveRecipe() {
+  if (isSaving) return;
   const name = document.getElementById('f-name').value.trim();
   if (!name) { showToast('请输入菜名！'); return; }
+  isSaving = true;
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.textContent = '保存中...';
 
   const customMethod = document.getElementById('f-method-custom').value.trim();
   const allMethods = customMethod ? [...selectedMethods, customMethod] : [...selectedMethods];
@@ -2086,6 +2246,7 @@ function saveRecipe() {
   }
 
   save();
+  isSaving = false;
   resetAddForm();
   goToPage('home');
 }
@@ -2105,7 +2266,6 @@ function resetAddForm() {
   document.getElementById('f-steps').value = '';
   document.getElementById('f-notes').value = '';
   document.getElementById('f-method-custom').value = '';
-  document.getElementById('import-url').value = '';
   document.getElementById('img-gallery').style.display = 'none';
   document.getElementById('img-upload-area').style.display = 'block';
   document.getElementById('scan-preview').style.display = 'none';
@@ -2114,7 +2274,10 @@ function resetAddForm() {
   document.getElementById('scan-btn').disabled = true;
   document.getElementById('scan-btn').innerHTML = '<span>🤖</span> AI 识别并填入菜谱';
   document.getElementById('add-page-title').textContent = '➕ 添加菜谱';
-  document.getElementById('save-btn').textContent = '保存菜谱 ✓';
+  isSaving = false;
+  const saveBtn = document.getElementById('save-btn');
+  saveBtn.disabled = false;
+  saveBtn.textContent = '保存菜谱 ✓';
   document.querySelectorAll('.quick-option').forEach(b => b.classList.remove('selected'));
   renderTags();
   document.getElementById('voice-result').style.display = 'none';
