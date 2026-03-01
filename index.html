@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///C:/Users/zwd89/Downloads/recipe-app_5.html -->
+<!-- saved from url=(0050)file:///C:/Users/zwd89/Downloads/recipe-app_6.html -->
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -1240,7 +1240,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 <div id="app">
   <!-- HEADER -->
   <div id="header">
-    <div class="header-title" id="header-title">🍱 今天吃什么</div>
+    <div class="header-title" id="header-title">➕ 添加菜谱</div>
     <div class="header-right" id="header-right">
       <button class="icon-btn" onclick="showSearch()" id="search-toggle-btn" title="搜索">🔍</button>
     </div>
@@ -1250,7 +1250,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
   <div id="pages">
 
     <!-- HOME -->
-    <div class="page active" id="page-home">
+    <div class="page" id="page-home">
       <div class="meal-tabs">
         <button class="meal-tab active" onclick="setMealTab(&#39;breakfast&#39;)" id="tab-breakfast">☀️ 早饭</button>
         <button class="meal-tab" onclick="setMealTab(&#39;dinner&#39;)" id="tab-dinner">🌙 晚饭</button>
@@ -1326,7 +1326,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
     </div>
 
     <!-- ADD -->
-    <div class="page" id="page-add">
+    <div class="page active" id="page-add">
       <div class="page-title" id="add-page-title">➕ 添加菜谱</div>
 
       <!-- Image -->
@@ -1558,7 +1558,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 
   <!-- BOTTOM NAV -->
   <div id="nav">
-    <button class="nav-btn active" onclick="goToPage(&#39;home&#39;)" id="nav-home">
+    <button class="nav-btn" onclick="goToPage(&#39;home&#39;)" id="nav-home">
       <span class="nav-icon">🏠</span>
       <span class="nav-label">菜谱库</span>
     </button>
@@ -1566,7 +1566,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
       <span class="nav-icon">🤖</span>
       <span class="nav-label">AI推荐</span>
     </button>
-    <button class="nav-btn" onclick="goToPage(&#39;add&#39;)" id="nav-add">
+    <button class="nav-btn active" onclick="goToPage(&#39;add&#39;)" id="nav-add">
       <span class="nav-icon">➕</span>
       <span class="nav-label">添加</span>
     </button>
@@ -1582,7 +1582,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 <div id="lightbox" onclick="closeLightbox(event)">
   <button id="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-nav" id="lightbox-prev" onclick="lightboxNav(-1,event)">‹</button>
-  <img id="lightbox-img" src="file:///C:/Users/zwd89/Downloads/recipe-app_5.html">
+  <img id="lightbox-img" src="file:///C:/Users/zwd89/Downloads/recipe-app_6.html">
   <div id="lightbox-name"></div>
   <div id="lightbox-dots"></div>
   <div id="lightbox-hint">点击图片外关闭</div>
