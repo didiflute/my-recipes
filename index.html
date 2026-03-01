@@ -710,19 +710,108 @@ html, body {
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
   background: var(--warm0);
 }
 .img-upload-area:active { border-color: var(--warm3); background: var(--warm1); }
-.img-upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.img-preview {
-  width: 100%; max-height: 200px;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-  display: none;
-}
 .img-upload-hint { font-size: 13px; color: var(--text-light); margin-top: 8px; }
+
+/* Multi-image gallery */
+.img-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.img-thumb-wrap {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--warm1);
+}
+.img-thumb-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.img-thumb-wrap.main-img::after {
+  content: '封面';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(160,90,50,0.7);
+  color: white; font-size: 10px;
+  text-align: center; padding: 3px;
+}
+.img-thumb-remove {
+  position: absolute; top: 4px; right: 4px;
+  width: 20px; height: 20px;
+  border-radius: 50%; border: none;
+  background: rgba(0,0,0,0.5);
+  color: white; font-size: 12px;
+  cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  line-height: 1;
+}
+.img-add-more {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  border: 2px dashed var(--warm2);
+  background: var(--warm0);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text-light);
+  font-size: 22px; gap: 4px;
+  transition: all 0.15s;
+}
+.img-add-more span { font-size: 10px; }
+.img-add-more:active { background: var(--warm1); border-color: var(--warm3); }
+
+/* Card front image slider */
+.card-img-slider {
+  width: 100%; height: 100%;
+  position: relative; overflow: hidden;
+}
+.card-img-slider img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0; transition: opacity 0.4s;
+}
+.card-img-slider img.active { opacity: 1; }
+.slider-dots {
+  position: absolute; bottom: 38px; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 4px; z-index: 3;
+}
+.slider-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  transition: background 0.2s;
+}
+.slider-dot.active { background: white; }
+
+/* Scan recipe image */
+.scan-upload-area {
+  border: 2px dashed var(--warm2);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--warm0);
+  transition: all 0.2s;
+  margin-bottom: 10px;
+}
+.scan-upload-area:active { border-color: var(--warm3); background: var(--warm1); }
+.scan-preview { width: 100%; max-height: 160px; object-fit: contain; border-radius: 8px; display: none; margin-bottom: 8px; }
+.scan-btn {
+  width: 100%; padding: 10px;
+  border-radius: var(--radius-sm); border: none;
+  background: var(--warm3); color: white;
+  font-size: 14px; font-weight: 600;
+  font-family: 'Noto Sans SC', sans-serif;
+  cursor: pointer; transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.scan-btn:active { background: var(--warm4); }
+.scan-btn:disabled { background: var(--warm2); cursor: not-allowed; }
 
 /* Tags */
 .tags-input-area {
@@ -1076,15 +1165,31 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 
       <!-- Image -->
       <div class="form-section">
-        <div class="form-section-title">📸 菜品图片</div>
+        <div class="form-section-title">📸 菜品图片（可多张，第一张为封面）</div>
+        <div id="img-gallery" class="img-gallery" style="display:none"></div>
         <div class="img-upload-area" id="img-upload-area" onclick="document.getElementById('img-file').click()">
-          <input type="file" id="img-file" accept="image/*" onchange="handleImgUpload(event)" style="display:none">
-          <img id="img-preview" class="img-preview">
+          <input type="file" id="img-file" accept="image/*" multiple onchange="handleImgUpload(event)" style="display:none">
           <div id="img-placeholder">
             <div style="font-size:32px">📷</div>
-            <div class="img-upload-hint">点击上传菜品照片</div>
+            <div class="img-upload-hint">点击上传菜品照片（可选多张）</div>
           </div>
         </div>
+
+        <div style="margin-top:14px">
+          <div class="form-section-title" style="margin-bottom:8px">📖 拍菜谱图片让AI识别</div>
+          <div class="scan-upload-area" onclick="document.getElementById('scan-file').click()">
+            <input type="file" id="scan-file" accept="image/*" onchange="handleScanUpload(event)" style="display:none">
+            <img id="scan-preview" class="scan-preview">
+            <div id="scan-placeholder">
+              <div style="font-size:28px">📄</div>
+              <div style="font-size:13px;color:var(--text-light);margin-top:6px">点击上传菜谱图片或截图</div>
+            </div>
+          </div>
+          <button class="scan-btn" id="scan-btn" onclick="scanRecipeImage()" disabled>
+            <span>🤖</span> AI 识别菜谱内容
+          </button>
+        </div>
+
         <div style="margin-top:12px">
           <div class="form-section-title" style="margin-bottom:8px">🔗 从链接导入</div>
           <div class="import-row">
@@ -1317,7 +1422,7 @@ let aiChatActive = false;
 let mediaRecorder = null;
 let isRecording = false;
 let addMicRecording = false;
-let imgData = null;
+let imgDataList = [];
 
 // ============ INIT ============
 window.onload = () => {
@@ -1414,9 +1519,17 @@ function renderGrid() {
 
 function cardHTML(r) {
   const favClass = r.favorite ? 'active' : '';
-  const imgHTML = r.img
-    ? `<img class="card-img" src="${r.img}" alt="${r.name}" loading="lazy">`
-    : `<div class="card-img-placeholder"><span>${getCookingEmoji(r.methods)}</span><span>${r.name}</span></div>`;
+  const imgs = r.imgs && r.imgs.length > 0 ? r.imgs : (r.img ? [r.img] : []);
+  let imgHTML;
+  if (imgs.length === 0) {
+    imgHTML = `<div class="card-img-placeholder"><span>${getCookingEmoji(r.methods)}</span><span>${r.name}</span></div>`;
+  } else if (imgs.length === 1) {
+    imgHTML = `<img class="card-img" src="${imgs[0]}" alt="${r.name}" loading="lazy">`;
+  } else {
+    const slides = imgs.map((src, i) => `<img src="${src}" class="${i===0?'active':''}"></img>`).join('');
+    const dots = imgs.map((_, i) => `<span class="slider-dot ${i===0?'active':''}"></span>`).join('');
+    imgHTML = `<div class="card-img-slider" id="slider-${r.id}" onclick="advanceSlider(\'${r.id}\',event)">${slides}<div class="slider-dots">${dots}</div></div>`;
+  }
 
   const mealLabel = r.meal === 'breakfast' ? '早饭' : r.meal === 'dinner' ? '晚饭' : '早/晚';
   const tagsHTML = (r.tags || []).slice(0,3).map(t => `<span class="card-tag">${t}</span>`).join('');
@@ -1452,6 +1565,21 @@ function cardHTML(r) {
       </div>
     </div>
   </div>`;
+}
+
+function advanceSlider(id, e) {
+  e.stopPropagation();
+  const slider = document.getElementById('slider-' + id);
+  if (!slider) return;
+  const imgs = slider.querySelectorAll('img');
+  const dots = slider.querySelectorAll('.slider-dot');
+  let current = 0;
+  imgs.forEach((img, i) => { if (img.classList.contains('active')) current = i; });
+  const next = (current + 1) % imgs.length;
+  imgs[current].classList.remove('active');
+  imgs[next].classList.add('active');
+  dots[current].classList.remove('active');
+  dots[next].classList.add('active');
 }
 
 function getCookingEmoji(methods) {
@@ -1520,15 +1648,9 @@ function editRecipe(id, e) {
   currentTags = r.tags ? [...r.tags] : [];
   renderTags();
 
-  imgData = r.img || null;
-  if (imgData) {
-    document.getElementById('img-preview').src = imgData;
-    document.getElementById('img-preview').style.display = 'block';
-    document.getElementById('img-placeholder').style.display = 'none';
-  } else {
-    document.getElementById('img-preview').style.display = 'none';
-    document.getElementById('img-placeholder').style.display = 'block';
-  }
+  imgDataList = r.imgs ? [...r.imgs] : (r.img ? [r.img] : []);
+  scanImgData = null;
+  renderImgGallery();
 
   document.getElementById('save-btn').textContent = '更新菜谱 ✓';
 }
@@ -1584,16 +1706,107 @@ function removeTag(i) {
 }
 
 function handleImgUpload(e) {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      imgDataList.push(ev.target.result);
+      renderImgGallery();
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = '';
+}
+
+function renderImgGallery() {
+  const gallery = document.getElementById('img-gallery');
+  const placeholder = document.getElementById('img-placeholder');
+  const uploadArea = document.getElementById('img-upload-area');
+  if (imgDataList.length === 0) {
+    gallery.style.display = 'none';
+    uploadArea.style.display = 'block';
+    return;
+  }
+  gallery.style.display = 'grid';
+  uploadArea.style.display = 'none';
+  gallery.innerHTML = imgDataList.map((src, i) => `
+    <div class="img-thumb-wrap ${i===0?'main-img':''}">
+      <img src="${src}">
+      <button class="img-thumb-remove" onclick="removeImg(${i})">×</button>
+    </div>
+  `).join('') + `
+    <div class="img-add-more" onclick="document.getElementById('img-file').click()">
+      <span>＋</span><span>添加</span>
+    </div>`;
+}
+
+function removeImg(i) {
+  imgDataList.splice(i, 1);
+  renderImgGallery();
+}
+
+// Scan recipe image
+let scanImgData = null;
+function handleScanUpload(e) {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = ev => {
-    imgData = ev.target.result;
-    document.getElementById('img-preview').src = imgData;
-    document.getElementById('img-preview').style.display = 'block';
-    document.getElementById('img-placeholder').style.display = 'none';
+    scanImgData = ev.target.result;
+    document.getElementById('scan-preview').src = scanImgData;
+    document.getElementById('scan-preview').style.display = 'block';
+    document.getElementById('scan-placeholder').style.display = 'none';
+    document.getElementById('scan-btn').disabled = false;
   };
   reader.readAsDataURL(file);
+  e.target.value = '';
+}
+
+async function scanRecipeImage() {
+  if (!scanImgData) return;
+  if (!apiKey) { showToast('需要 API Key 才能识别'); return; }
+  const btn = document.getElementById('scan-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> 识别中...';
+  try {
+    const base64 = scanImgData.split(',')[1];
+    const mimeMatch = scanImgData.match(/data:([^;]+);/);
+    const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: mime, data: base64 } },
+            { type: 'text', text: '请识别这张菜谱图片，提取出食材和做法，以JSON格式返回（只返回JSON）：{"name":"菜名(如果有)","ingredients":"食材列表","steps":"做法步骤","time":"烹饪分钟数(纯数字,没有则空)","difficulty":"easy/medium/hard"}' }
+          ]
+        }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content[0].text;
+    const parsed = JSON.parse(text.replace(/```json|```/g,'').trim());
+    if (parsed.name && !document.getElementById('f-name').value) document.getElementById('f-name').value = parsed.name;
+    if (parsed.ingredients) document.getElementById('f-ingredients').value = parsed.ingredients;
+    if (parsed.steps) document.getElementById('f-steps').value = parsed.steps;
+    if (parsed.time) document.getElementById('f-time').value = parsed.time;
+    if (parsed.difficulty) document.getElementById('f-difficulty').value = parsed.difficulty;
+    showToast('识别成功！请检查内容 ✓');
+  } catch(err) {
+    showToast('识别失败，请重试');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '<span>🤖</span> AI 识别菜谱内容';
 }
 
 function saveRecipe() {
@@ -1615,7 +1828,8 @@ function saveRecipe() {
     steps: document.getElementById('f-steps').value,
     notes: document.getElementById('f-notes').value,
     tags: [...currentTags],
-    img: imgData,
+    imgs: [...imgDataList],
+    img: imgDataList[0] || null,
     favorite: editingId ? (recipes.find(r => r.id === editingId)?.favorite || false) : false,
     createdAt: editingId ? (recipes.find(r => r.id === editingId)?.createdAt || Date.now()) : Date.now(),
   };
@@ -1635,7 +1849,8 @@ function saveRecipe() {
 
 function resetAddForm() {
   editingId = null;
-  imgData = null;
+  imgDataList = [];
+  scanImgData = null;
   currentTags = [];
   selectedMethods = [];
   selectedTaste = '';
@@ -1648,8 +1863,12 @@ function resetAddForm() {
   document.getElementById('f-notes').value = '';
   document.getElementById('f-method-custom').value = '';
   document.getElementById('import-url').value = '';
-  document.getElementById('img-preview').style.display = 'none';
-  document.getElementById('img-placeholder').style.display = 'block';
+  document.getElementById('img-gallery').style.display = 'none';
+  document.getElementById('img-upload-area').style.display = 'block';
+  document.getElementById('scan-preview').style.display = 'none';
+  document.getElementById('scan-placeholder').style.display = 'block';
+  document.getElementById('scan-btn').disabled = true;
+  document.getElementById('scan-btn').innerHTML = '<span>🤖</span> AI 识别菜谱内容';
   document.getElementById('add-page-title').textContent = '➕ 添加菜谱';
   document.getElementById('save-btn').textContent = '保存菜谱 ✓';
   document.querySelectorAll('.quick-option').forEach(b => b.classList.remove('selected'));
