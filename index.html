@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0050)file:///C:/Users/zwd89/Downloads/recipe-app_2.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="今天吃什么">
 <meta name="theme-color" content="#fdf6ec">
 <title>今天吃什么 🍱</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="./index_files/css2" rel="stylesheet">
 <style>
 :root {
   --cream: #fdf8f0;
@@ -1067,6 +1067,71 @@ html, body {
 
 /* Tap animations */
 button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
+
+/* ===== LIGHTBOX ===== */
+#lightbox {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.92);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+#lightbox.show { opacity: 1; pointer-events: all; }
+#lightbox-img {
+  max-width: 96vw; max-height: 70vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+#lightbox-name {
+  color: white; font-family: 'Noto Serif SC', serif;
+  font-size: 18px; font-weight: 600;
+  margin-top: 16px; text-align: center;
+}
+#lightbox-hint {
+  color: rgba(255,255,255,0.5); font-size: 13px;
+  margin-top: 8px;
+}
+#lightbox-dots {
+  display: flex; gap: 8px; margin-top: 12px;
+}
+#lightbox-dots span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.4); cursor: pointer;
+  transition: background 0.2s;
+}
+#lightbox-dots span.active { background: white; }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  border: none; background: rgba(255,255,255,0.15);
+  color: white; font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.lightbox-nav:active { background: rgba(255,255,255,0.3); }
+#lightbox-prev { left: 12px; }
+#lightbox-next { right: 12px; }
+#lightbox-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: none; background: rgba(255,255,255,0.15);
+  color: white; font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+#lightbox-recipe-btn {
+  margin-top: 16px;
+  padding: 12px 28px;
+  border-radius: 24px; border: none;
+  background: var(--warm3); color: white;
+  font-size: 15px; font-weight: 600;
+  font-family: 'Noto Serif SC', serif;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  transition: all 0.18s;
+}
+#lightbox-recipe-btn:active { transform: scale(0.96); }
+
 </style>
 </head>
 <body>
@@ -1088,9 +1153,9 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
     <!-- HOME -->
     <div class="page active" id="page-home">
       <div class="meal-tabs">
-        <button class="meal-tab active" onclick="setMealTab('breakfast')" id="tab-breakfast">☀️ 早饭</button>
-        <button class="meal-tab" onclick="setMealTab('dinner')" id="tab-dinner">🌙 晚饭</button>
-        <button class="meal-tab" onclick="setMealTab('favorites')" id="tab-favorites">❤️ 收藏</button>
+        <button class="meal-tab active" onclick="setMealTab(&#39;breakfast&#39;)" id="tab-breakfast">☀️ 早饭</button>
+        <button class="meal-tab" onclick="setMealTab(&#39;dinner&#39;)" id="tab-dinner">🌙 晚饭</button>
+        <button class="meal-tab" onclick="setMealTab(&#39;favorites&#39;)" id="tab-favorites">❤️ 收藏</button>
       </div>
       <div class="toolbar">
         <div class="search-box">
@@ -1098,23 +1163,26 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
           <input type="text" id="search-input" placeholder="搜索菜名..." oninput="filterRecipes()">
         </div>
         <div class="view-toggle">
-          <button class="view-btn active" id="view-grid" onclick="setView('grid')" title="双列">⊞</button>
-          <button class="view-btn" id="view-list" onclick="setView('list')" title="单列">☰</button>
+          <button class="view-btn active" id="view-grid" onclick="setView(&#39;grid&#39;)" title="双列">⊞</button>
+          <button class="view-btn" id="view-list" onclick="setView(&#39;list&#39;)" title="单列">☰</button>
         </div>
       </div>
       <div class="filter-strip" id="filter-strip">
-        <button class="filter-chip active" onclick="setFilter('all')" data-filter="all">全部</button>
-        <button class="filter-chip" onclick="setFilter('蒸')" data-filter="蒸">蒸</button>
-        <button class="filter-chip" onclick="setFilter('炒')" data-filter="炒">炒</button>
-        <button class="filter-chip" onclick="setFilter('空气炸锅')" data-filter="空气炸锅">空气炸锅</button>
-        <button class="filter-chip" onclick="setFilter('烤箱')" data-filter="烤箱">烤箱</button>
-        <button class="filter-chip" onclick="setFilter('炖')" data-filter="炖">炖</button>
-        <button class="filter-chip" onclick="setFilter('甜点')" data-filter="甜点">甜点</button>
-        <button class="filter-chip" onclick="setFilter('主食')" data-filter="主食">主食</button>
-        <button class="filter-chip" onclick="setFilter('easy')" data-filter="easy">⭐ 简单</button>
-        <button class="filter-chip" onclick="setFilter('quick')" data-filter="quick">⚡ 30分钟内</button>
+        <button class="filter-chip active" onclick="setFilter(&#39;all&#39;)" data-filter="all">全部</button>
+        <button class="filter-chip" onclick="setFilter(&#39;蒸&#39;)" data-filter="蒸">蒸</button>
+        <button class="filter-chip" onclick="setFilter(&#39;炒&#39;)" data-filter="炒">炒</button>
+        <button class="filter-chip" onclick="setFilter(&#39;空气炸锅&#39;)" data-filter="空气炸锅">空气炸锅</button>
+        <button class="filter-chip" onclick="setFilter(&#39;烤箱&#39;)" data-filter="烤箱">烤箱</button>
+        <button class="filter-chip" onclick="setFilter(&#39;炖&#39;)" data-filter="炖">炖</button>
+        <button class="filter-chip" onclick="setFilter(&#39;甜点&#39;)" data-filter="甜点">甜点</button>
+        <button class="filter-chip" onclick="setFilter(&#39;主食&#39;)" data-filter="主食">主食</button>
+        <button class="filter-chip" onclick="setFilter(&#39;easy&#39;)" data-filter="easy">⭐ 简单</button>
+        <button class="filter-chip" onclick="setFilter(&#39;quick&#39;)" data-filter="quick">⚡ 30分钟内</button>
       </div>
-      <div class="recipe-grid" id="recipe-grid"></div>
+      <div class="recipe-grid" id="recipe-grid"><div class="empty-state">
+      <div class="empty-icon">🥢</div>
+      <p>还没有菜谱<br>点击下方 ➕ 添加吧！</p>
+    </div></div>
     </div>
 
     <!-- AI -->
@@ -1125,7 +1193,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
         <div class="ai-subtitle">告诉我你的需求，我来推荐</div>
       </div>
 
-      <div id="ai-no-key" style="display:none">
+      <div id="ai-no-key" style="display: block;">
         <div style="background:#fff8f0;border-radius:16px;padding:16px;text-align:center;margin-bottom:16px;border:1.5px solid var(--warm2)">
           <div style="font-size:32px;margin-bottom:8px">🔑</div>
           <div style="font-size:14px;color:var(--text-mid);margin-bottom:10px">需要先设置 API Key 才能使用 AI 功能</div>
@@ -1133,7 +1201,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
         </div>
       </div>
 
-      <div id="ai-main">
+      <div id="ai-main" style="display: none;">
         <button class="start-chat-btn" onclick="startAIChat()" id="start-chat-btn">
           <span>✨</span> 开始今日推荐
         </button>
@@ -1142,8 +1210,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 
         <div class="ai-input-area" id="ai-input-area" style="display:none">
           <button class="mic-btn" id="ai-mic-btn" onclick="toggleAIMic()" title="语音输入">🎤</button>
-          <textarea class="ai-input" id="ai-input" placeholder="输入你的回答..." rows="1"
-            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAIMessage()}"></textarea>
+          <textarea class="ai-input" id="ai-input" placeholder="输入你的回答..." rows="1" onkeydown="if(event.key===&#39;Enter&#39;&amp;&amp;!event.shiftKey){event.preventDefault();sendAIMessage()}"></textarea>
           <button class="send-btn" onclick="sendAIMessage()" id="ai-send-btn">➤</button>
         </div>
 
@@ -1167,8 +1234,8 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
       <div class="form-section">
         <div class="form-section-title">📸 菜品图片（可多张，第一张为封面）</div>
         <div id="img-gallery" class="img-gallery" style="display:none"></div>
-        <div class="img-upload-area" id="img-upload-area" onclick="document.getElementById('img-file').click()">
-          <input type="file" id="img-file" accept="image/*" multiple onchange="handleImgUpload(event)" style="display:none">
+        <div class="img-upload-area" id="img-upload-area" onclick="document.getElementById(&#39;img-file&#39;).click()">
+          <input type="file" id="img-file" accept="image/*" multiple="" onchange="handleImgUpload(event)" style="display:none">
           <div id="img-placeholder">
             <div style="font-size:32px">📷</div>
             <div class="img-upload-hint">点击上传菜品照片（可选多张）</div>
@@ -1176,8 +1243,8 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
         </div>
 
         <div style="margin-top:14px">
-          <div class="form-section-title" style="margin-bottom:8px">📖 拍菜谱图片让AI识别</div>
-          <div class="scan-upload-area" onclick="document.getElementById('scan-file').click()">
+          <div class="form-section-title" style="margin-bottom:8px">📖 AI 识别菜谱（图片或文字）</div>
+          <div class="scan-upload-area" onclick="document.getElementById(&#39;scan-file&#39;).click()">
             <input type="file" id="scan-file" accept="image/*" onchange="handleScanUpload(event)" style="display:none">
             <img id="scan-preview" class="scan-preview">
             <div id="scan-placeholder">
@@ -1185,8 +1252,10 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
               <div style="font-size:13px;color:var(--text-light);margin-top:6px">点击上传菜谱图片或截图</div>
             </div>
           </div>
-          <button class="scan-btn" id="scan-btn" onclick="scanRecipeImage()" disabled>
-            <span>🤖</span> AI 识别菜谱内容
+          <div style="text-align:center;color:var(--text-light);font-size:12px;margin:8px 0">— 或者粘贴菜谱文字 —</div>
+          <textarea id="scan-text" class="form-textarea" placeholder="把菜谱文字粘贴到这里，例如从微信、小红书复制的内容..." style="min-height:90px" oninput="onScanTextInput()"></textarea>
+          <button class="scan-btn" id="scan-btn" onclick="scanRecipeContent()" disabled="">
+            <span>🤖</span> AI 识别并填入菜谱
           </button>
         </div>
 
@@ -1239,27 +1308,27 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
         <div class="form-field">
           <label class="form-label">烹调方式</label>
           <div class="quick-options" id="cooking-method-options">
-            <button class="quick-option" onclick="toggleOption(this,'蒸')">蒸</button>
-            <button class="quick-option" onclick="toggleOption(this,'炒')">炒</button>
-            <button class="quick-option" onclick="toggleOption(this,'空气炸锅')">空气炸锅</button>
-            <button class="quick-option" onclick="toggleOption(this,'烤箱')">烤箱</button>
-            <button class="quick-option" onclick="toggleOption(this,'炖')">炖</button>
-            <button class="quick-option" onclick="toggleOption(this,'煎')">煎</button>
-            <button class="quick-option" onclick="toggleOption(this,'凉拌')">凉拌</button>
-            <button class="quick-option" onclick="toggleOption(this,'甜点')">甜点</button>
-            <button class="quick-option" onclick="toggleOption(this,'主食')">主食</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;蒸&#39;)">蒸</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;炒&#39;)">炒</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;空气炸锅&#39;)">空气炸锅</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;烤箱&#39;)">烤箱</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;炖&#39;)">炖</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;煎&#39;)">煎</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;凉拌&#39;)">凉拌</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;甜点&#39;)">甜点</button>
+            <button class="quick-option" onclick="toggleOption(this,&#39;主食&#39;)">主食</button>
           </div>
           <input type="text" class="form-input" id="f-method-custom" placeholder="或输入其他方式..." style="margin-top:8px">
         </div>
         <div class="form-field">
           <label class="form-label">口味</label>
           <div class="quick-options" id="taste-options">
-            <button class="quick-option" onclick="toggleTasteOption(this,'清淡')">清淡</button>
-            <button class="quick-option" onclick="toggleTasteOption(this,'微辣')">微辣</button>
-            <button class="quick-option" onclick="toggleTasteOption(this,'辣')">辣</button>
-            <button class="quick-option" onclick="toggleTasteOption(this,'甜')">甜</button>
-            <button class="quick-option" onclick="toggleTasteOption(this,'咸鲜')">咸鲜</button>
-            <button class="quick-option" onclick="toggleTasteOption(this,'酸甜')">酸甜</button>
+            <button class="quick-option" onclick="toggleTasteOption(this,&#39;清淡&#39;)">清淡</button>
+            <button class="quick-option" onclick="toggleTasteOption(this,&#39;微辣&#39;)">微辣</button>
+            <button class="quick-option" onclick="toggleTasteOption(this,&#39;辣&#39;)">辣</button>
+            <button class="quick-option" onclick="toggleTasteOption(this,&#39;甜&#39;)">甜</button>
+            <button class="quick-option" onclick="toggleTasteOption(this,&#39;咸鲜&#39;)">咸鲜</button>
+            <button class="quick-option" onclick="toggleTasteOption(this,&#39;酸甜&#39;)">酸甜</button>
           </div>
         </div>
       </div>
@@ -1267,23 +1336,28 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
       <!-- Ingredients -->
       <div class="form-section">
         <div class="form-section-title">🥦 食材</div>
-        <textarea class="form-textarea" id="f-ingredients" placeholder="例：&#10;番茄 2个&#10;鸡蛋 3个&#10;葱 适量&#10;盐、油 适量"></textarea>
+        <textarea class="form-textarea" id="f-ingredients" placeholder="例：
+番茄 2个
+鸡蛋 3个
+葱 适量
+盐、油 适量"></textarea>
       </div>
 
       <!-- Steps -->
       <div class="form-section">
         <div class="form-section-title">👨‍🍳 做法</div>
-        <textarea class="form-textarea" id="f-steps" placeholder="例：&#10;1. 番茄切块，鸡蛋打散备用&#10;2. 热锅凉油，炒鸡蛋..." style="min-height:120px"></textarea>
+        <textarea class="form-textarea" id="f-steps" placeholder="例：
+1. 番茄切块，鸡蛋打散备用
+2. 热锅凉油，炒鸡蛋..." style="min-height:120px"></textarea>
       </div>
 
       <!-- Tags & Notes -->
       <div class="form-section">
-        <div class="form-section-title">🏷️ 标签 & 备注</div>
+        <div class="form-section-title">🏷️ 标签 &amp; 备注</div>
         <div class="form-field">
           <label class="form-label">自定义标签</label>
-          <div class="tags-input-area" id="tags-input-area" onclick="document.getElementById('tag-input').focus()">
-            <input type="text" id="tag-input" class="tags-input" placeholder="输入标签按回车..."
-              onkeydown="handleTagInput(event)">
+          <div class="tags-input-area" id="tags-input-area" onclick="document.getElementById(&#39;tag-input&#39;).focus()">
+            <input type="text" id="tag-input" class="tags-input" placeholder="输入标签按回车..." onkeydown="handleTagInput(event)">
           </div>
         </div>
         <div class="form-field">
@@ -1327,7 +1401,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
           <input type="password" class="api-key-input" id="api-key-input" placeholder="sk-ant-...">
           <div style="display:flex;gap:8px;margin-top:8px">
             <button class="save-key-btn" onclick="saveApiKey()">保存</button>
-            <button class="save-key-btn" onclick="document.getElementById('api-key-input').type = document.getElementById('api-key-input').type==='password'?'text':'password'" style="background:var(--warm1);color:var(--warm4)">显示/隐藏</button>
+            <button class="save-key-btn" onclick="document.getElementById(&#39;api-key-input&#39;).type = document.getElementById(&#39;api-key-input&#39;).type===&#39;password&#39;?&#39;text&#39;:&#39;password&#39;" style="background:var(--warm1);color:var(--warm4)">显示/隐藏</button>
           </div>
         </div>
       </div>
@@ -1341,7 +1415,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
           </div>
           <span class="settings-action">›</span>
         </div>
-        <div class="settings-row" style="cursor:pointer" onclick="document.getElementById('import-file').click()">
+        <div class="settings-row" style="cursor:pointer" onclick="document.getElementById(&#39;import-file&#39;).click()">
           <span class="settings-icon">📥</span>
           <div class="settings-info">
             <div class="settings-label">导入数据</div>
@@ -1382,23 +1456,36 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 
   <!-- BOTTOM NAV -->
   <div id="nav">
-    <button class="nav-btn active" onclick="goToPage('home')" id="nav-home">
+    <button class="nav-btn active" onclick="goToPage(&#39;home&#39;)" id="nav-home">
       <span class="nav-icon">🏠</span>
       <span class="nav-label">菜谱库</span>
     </button>
-    <button class="nav-btn" onclick="goToPage('ai')" id="nav-ai">
+    <button class="nav-btn" onclick="goToPage(&#39;ai&#39;)" id="nav-ai">
       <span class="nav-icon">🤖</span>
       <span class="nav-label">AI推荐</span>
     </button>
-    <button class="nav-btn" onclick="goToPage('add')" id="nav-add">
+    <button class="nav-btn" onclick="goToPage(&#39;add&#39;)" id="nav-add">
       <span class="nav-icon">➕</span>
       <span class="nav-label">添加</span>
     </button>
-    <button class="nav-btn" onclick="goToPage('settings')" id="nav-settings">
+    <button class="nav-btn" onclick="goToPage(&#39;settings&#39;)" id="nav-settings">
       <span class="nav-icon">⚙️</span>
       <span class="nav-label">设置</span>
     </button>
   </div>
+</div>
+
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox(event)">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav" id="lightbox-prev" onclick="lightboxNav(-1,event)">‹</button>
+  <img id="lightbox-img" src="file:///C:/Users/zwd89/Downloads/recipe-app_2.html">
+  <div id="lightbox-name"></div>
+  <div id="lightbox-dots"></div>
+  <div id="lightbox-hint">点击图片外关闭</div>
+  <button id="lightbox-recipe-btn" onclick="lightboxFlipToRecipe()">查看菜谱 →</button>
+  <button class="lightbox-nav" id="lightbox-next" onclick="lightboxNav(1,event)">›</button>
 </div>
 
 <!-- TOAST -->
@@ -1588,14 +1675,89 @@ function getCookingEmoji(methods) {
   return map[methods[0]] || '🍽️';
 }
 
-// Flip card
+// Card click: image area -> lightbox, other area -> flip
 document.addEventListener('click', e => {
   const wrapper = e.target.closest('.card-wrapper');
   if (!wrapper) return;
   if (e.target.closest('.card-fav') || e.target.closest('.back-btn')) return;
+  if (e.target.closest('.card-img-slider')) return; // slider handles its own click
   const inner = wrapper.querySelector('.card-inner');
+  const isFlipped = inner.classList.contains('flipped');
+  // If on front, click image area -> lightbox; click overlay/name -> flip
+  if (!isFlipped) {
+    const onImg = e.target.closest('.card-img') || e.target.closest('.card-img-slider') || e.target.tagName === 'IMG';
+    if (onImg || e.target.closest('.card-front') && !e.target.closest('.card-overlay')) {
+      // open lightbox
+      const recipeId = wrapper.id.replace('card-', '');
+      openLightbox(recipeId);
+      return;
+    }
+  }
   inner.classList.toggle('flipped');
 });
+
+// Lightbox state
+let lightboxRecipeId = null;
+let lightboxImgIndex = 0;
+
+function openLightbox(id) {
+  const r = recipes.find(r => r.id === id);
+  if (!r) return;
+  const imgs = r.imgs && r.imgs.length > 0 ? r.imgs : (r.img ? [r.img] : []);
+  if (imgs.length === 0) return;
+  lightboxRecipeId = id;
+  lightboxImgIndex = 0;
+  document.getElementById('lightbox-name').textContent = r.name;
+  updateLightboxImg(imgs);
+  document.getElementById('lightbox-prev').style.display = imgs.length > 1 ? 'flex' : 'none';
+  document.getElementById('lightbox-next').style.display = imgs.length > 1 ? 'flex' : 'none';
+  document.getElementById('lightbox').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateLightboxImg(imgs) {
+  document.getElementById('lightbox-img').src = imgs[lightboxImgIndex];
+  const dotsEl = document.getElementById('lightbox-dots');
+  dotsEl.innerHTML = imgs.length > 1 ? imgs.map((_, i) =>
+    `<span class="${i===lightboxImgIndex?'active':''}" onclick="lightboxGoTo(${i},event)"></span>`
+  ).join('') : '';
+}
+
+function lightboxNav(dir, e) {
+  if (e) e.stopPropagation();
+  const r = recipes.find(r => r.id === lightboxRecipeId);
+  if (!r) return;
+  const imgs = r.imgs && r.imgs.length > 0 ? r.imgs : (r.img ? [r.img] : []);
+  lightboxImgIndex = (lightboxImgIndex + dir + imgs.length) % imgs.length;
+  updateLightboxImg(imgs);
+}
+
+function lightboxGoTo(i, e) {
+  if (e) e.stopPropagation();
+  const r = recipes.find(r => r.id === lightboxRecipeId);
+  if (!r) return;
+  const imgs = r.imgs && r.imgs.length > 0 ? r.imgs : (r.img ? [r.img] : []);
+  lightboxImgIndex = i;
+  updateLightboxImg(imgs);
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && e.target !== document.getElementById('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('show');
+  document.body.style.overflow = '';
+  lightboxRecipeId = null;
+}
+
+function lightboxFlipToRecipe() {
+  document.getElementById('lightbox').classList.remove('show');
+  document.body.style.overflow = '';
+  if (!lightboxRecipeId) return;
+  const inner = document.getElementById('inner-' + lightboxRecipeId);
+  if (inner) inner.classList.add('flipped');
+  const card = document.getElementById('card-' + lightboxRecipeId);
+  if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  lightboxRecipeId = null;
+}
 
 // ============ FAVORITE ============
 function toggleFav(id, e) {
@@ -1763,6 +1925,70 @@ function handleScanUpload(e) {
   e.target.value = '';
 }
 
+function onScanTextInput() {
+  const text = document.getElementById('scan-text').value.trim();
+  const btn = document.getElementById('scan-btn');
+  btn.disabled = !(text || scanImgData);
+}
+
+async function scanRecipeContent() {
+  const text = document.getElementById('scan-text').value.trim();
+  if (!scanImgData && !text) return;
+  if (!apiKey) { showToast('需要 API Key 才能识别'); return; }
+  const btn = document.getElementById('scan-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> 识别中...';
+  try {
+    let messages;
+    if (scanImgData && !text) {
+      // image only
+      const base64 = scanImgData.split(',')[1];
+      const mimeMatch = scanImgData.match(/data:([^;]+);/);
+      const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+      messages = [{ role: 'user', content: [
+        { type: 'image', source: { type: 'base64', media_type: mime, data: base64 } },
+        { type: 'text', text: '请识别这张菜谱图片，以JSON格式返回（只返回JSON，无其他文字）：{"name":"菜名","ingredients":"食材列表每行一个带用量，例如：番茄 2个\\n鸡蛋 3个\\n盐 适量","steps":"做法步骤","time":"烹饪分钟数纯数字没有则空","difficulty":"easy/medium/hard"}' }
+      ]}];
+    } else {
+      // text (with optional image)
+      const userContent = [];
+      if (scanImgData) {
+        const base64 = scanImgData.split(',')[1];
+        const mimeMatch = scanImgData.match(/data:([^;]+);/);
+        const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+        userContent.push({ type: 'image', source: { type: 'base64', media_type: mime, data: base64 } });
+      }
+      userContent.push({ type: 'text', text: `请从以下菜谱文字中提取信息，以JSON格式返回（只返回JSON，无其他文字）：{"name":"菜名","ingredients":"食材列表每行一个带用量，例如：番茄 2个\\n鸡蛋 3个\\n盐 适量","steps":"做法步骤","time":"烹饪分钟数纯数字没有则空","difficulty":"easy/medium/hard"}
+
+菜谱内容：
+${text}` });
+      messages = [{ role: 'user', content: userContent }];
+    }
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1500, messages })
+    });
+    const data = await resp.json();
+    const parsed = JSON.parse(data.content[0].text.replace(/```json|```/g,'').trim());
+    if (parsed.name && !document.getElementById('f-name').value) document.getElementById('f-name').value = parsed.name;
+    if (parsed.ingredients) document.getElementById('f-ingredients').value = parsed.ingredients;
+    if (parsed.steps) document.getElementById('f-steps').value = parsed.steps;
+    if (parsed.time) document.getElementById('f-time').value = parsed.time;
+    if (parsed.difficulty) document.getElementById('f-difficulty').value = parsed.difficulty;
+    showToast('识别成功！请检查内容 ✓');
+  } catch(err) {
+    showToast('识别失败，请重试');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '<span>🤖</span> AI 识别并填入菜谱';
+}
+
 async function scanRecipeImage() {
   if (!scanImgData) return;
   if (!apiKey) { showToast('需要 API Key 才能识别'); return; }
@@ -1809,6 +2035,22 @@ async function scanRecipeImage() {
   btn.innerHTML = '<span>🤖</span> AI 识别菜谱内容';
 }
 
+// Extract clean ingredient names from free-form text
+function extractIngredientNames(text) {
+  if (!text) return [];
+  // Split by newlines, commas, Chinese commas, slashes
+  const lines = text.split(/[\n，,、/／]+/);
+  return lines.map(line => {
+    // Remove quantities: numbers, units (个克g毫升ml斤两杯勺匙片块条根茎适量少许各半)
+    return line
+      .replace(/\d+(\.\d+)?/g, '')
+      .replace(/[（(][^)）]*[)）]/g, '')
+      .replace(/(克|g|G|毫升|ml|ML|斤|两|杯|勺|匙|片|块|条|根|茎|棵|颗|粒|瓣|只|头|份|包|罐|瓶|袋|适量|少许|各|半|些|点|一点)/g, '')
+      .replace(/^[\s\d\-\*•·]+/, '')
+      .trim();
+  }).filter(s => s.length >= 1 && s.length <= 10);
+}
+
 function saveRecipe() {
   const name = document.getElementById('f-name').value.trim();
   if (!name) { showToast('请输入菜名！'); return; }
@@ -1825,6 +2067,7 @@ function saveRecipe() {
     methods: allMethods,
     taste: selectedTaste,
     ingredients: document.getElementById('f-ingredients').value,
+    ingredientNames: extractIngredientNames(document.getElementById('f-ingredients').value),
     steps: document.getElementById('f-steps').value,
     notes: document.getElementById('f-notes').value,
     tags: [...currentTags],
@@ -1867,8 +2110,9 @@ function resetAddForm() {
   document.getElementById('img-upload-area').style.display = 'block';
   document.getElementById('scan-preview').style.display = 'none';
   document.getElementById('scan-placeholder').style.display = 'block';
+  document.getElementById('scan-text').value = '';
   document.getElementById('scan-btn').disabled = true;
-  document.getElementById('scan-btn').innerHTML = '<span>🤖</span> AI 识别菜谱内容';
+  document.getElementById('scan-btn').innerHTML = '<span>🤖</span> AI 识别并填入菜谱';
   document.getElementById('add-page-title').textContent = '➕ 添加菜谱';
   document.getElementById('save-btn').textContent = '保存菜谱 ✓';
   document.querySelectorAll('.quick-option').forEach(b => b.classList.remove('selected'));
@@ -2013,22 +2257,29 @@ async function startAIChat() {
   document.getElementById('start-chat-btn').style.display = 'none';
 
   const recipeList = recipes.map(r =>
-    `ID:${r.id} 名称:${r.name} 餐别:${r.meal==='breakfast'?'早饭':'晚饭'} 时间:${r.time||'?'}分钟 难度:${r.difficulty||'?'} 烹调:${(r.methods||[]).join('/')} 口味:${r.taste||'?'} 食材:${r.ingredients?.substring(0,50)||''}`
+    `ID:${r.id} 名称:${r.name} 餐别:${r.meal==='breakfast'?'早饭':'晚饭'} 时间:${r.time||'?'}分钟 难度:${r.difficulty||'?'} 烹调:${(r.methods||[]).join('/')} 口味:${r.taste||'?'} 食材:${(r.ingredientNames&&r.ingredientNames.length?r.ingredientNames:extractIngredientNames(r.ingredients||'')).join('/')}`
   ).join('\n');
 
-  addAIMessage('ai', '你好！今天想做什么菜？先告诉我：早饭还是晚饭？');
+  addAIMessage('ai', '你好！今天做早饭还是晚饭？家里有什么食材？');
 
   const systemPrompt = `你是一个贴心的家庭菜谱推荐助手。用户的菜谱库如下：
 ${recipeList}
 
-请用友好的中文，问用户1-2个简短问题了解需求（餐别、口味、食材、时间等），然后从菜谱库中推荐3-5个最合适的菜。
+任务：问用户最多2个问题（餐别、现有食材），然后从菜谱库推荐3-5个菜。
 
-当你准备推荐时，请用以下格式输出：
+食材匹配规则（非常重要）：
+- 只匹配食材名称，完全忽略数量（"2个番茄"="有番茄"）
+- 理解常见别名：番茄=西红柿，土豆=马铃薯=薯仔，玉米笋=笋玉米，青椒=绿椒，猪肉=五花肉/里脊等
+- 如果用户说有某食材，菜谱食材列表里有对应食材（含别名），就算匹配
+- 优先推荐用户现有食材能做的菜
+- 如果用户没提食材，就根据餐别、口味、时间来推荐
+
+当你准备推荐时，必须用以下格式输出：
 RECOMMEND:
 [菜谱ID1,菜谱ID2,菜谱ID3]
-REASON:推荐理由（一句话说明搭配建议）
+REASON:一句话说明推荐理由和搭配建议
 
-在推荐之前只需问1-2个问题，不要问太多。语气温暖亲切。`;
+只问1-2个问题，不要啰嗦。语气温暖亲切像朋友一样。`;
 
   aiConversation = [{ role: 'system', content: systemPrompt }];
 }
@@ -2283,5 +2534,6 @@ function showSearch() {
   setTimeout(() => document.getElementById('search-input').focus(), 100);
 }
 </script>
-</body>
-</html>
+
+
+</body></html>
