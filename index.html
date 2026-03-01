@@ -1,38 +1,39 @@
 <!DOCTYPE html>
-<!-- saved from url=(0050)file:///C:/Users/zwd89/Downloads/recipe-app_6.html -->
+<!-- saved from url=(0050)file:///C:/Users/zwd89/Downloads/recipe-app_7.html -->
 <html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="今天吃什么">
-<meta name="theme-color" content="#fdf6ec">
+<meta name="theme-color" content="#ffffff">
 <title>今天吃什么 🍱</title>
 <link href="./index_files/css2" rel="stylesheet">
 <style>
 :root {
-  --cream: #fdf8f0;
-  --warm0: #fff9f0;
-  --warm1: #f5e8d5;
-  --warm2: #e8c9a0;
-  --warm3: #c8895a;
-  --warm4: #a05c35;
-  --warm5: #7a3e1e;
-  --accent: #e07b54;
-  --accent2: #f0a070;
-  --red: #e05050;
-  --green: #6a9e6a;
-  --text-dark: #3d2b1a;
-  --text-mid: #7a5840;
-  --text-light: #b08060;
-  --card-bg: #fffcf5;
-  --shadow-sm: 0 2px 8px rgba(160,100,50,0.12);
-  --shadow-md: 0 4px 20px rgba(160,100,50,0.18);
-  --shadow-lg: 0 8px 40px rgba(160,100,50,0.22);
-  --radius: 18px;
-  --radius-sm: 12px;
-  --nav-h: 70px;
-  --header-h: 60px;
+  /* Notion style */
+  --cream: #ffffff;
+  --warm0: #f7f6f3;
+  --warm1: #e9e9e7;
+  --warm2: #d3d2cf;
+  --warm3: #9b9a97;
+  --warm4: #37352f;
+  --warm5: #1e1d1b;
+  --accent: #2eaadc;
+  --accent2: #5bb3d0;
+  --red: #e03e3e;
+  --green: #0f7b6c;
+  --text-dark: #37352f;
+  --text-mid: #6b6b6b;
+  --text-light: #9b9a97;
+  --card-bg: #ffffff;
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+  --shadow-md: 0 2px 12px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.05);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.12);
+  --radius: 8px;
+  --radius-sm: 6px;
+  --nav-h: 64px;
+  --header-h: 56px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -48,10 +49,7 @@ html, body {
 /* ===== BACKGROUND ===== */
 #bg-pattern {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 80% 50% at 10% 10%, rgba(228,180,110,0.13) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 60% at 90% 90%, rgba(200,140,80,0.10) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(240,200,150,0.06) 0%, transparent 70%);
+  background: #f7f6f3;
 }
 
 /* ===== LAYOUT ===== */
@@ -62,9 +60,9 @@ html, body {
   height: var(--header-h);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 16px;
-  background: rgba(253,248,240,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--warm1);
   flex-shrink: 0;
   position: relative; z-index: 50;
@@ -72,10 +70,11 @@ html, body {
 
 .header-title {
   font-family: 'Noto Serif SC', serif;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--warm4);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  color: var(--text-dark);
 }
 
 .header-right { display: flex; gap: 8px; }
@@ -117,9 +116,9 @@ html, body {
 #nav {
   height: var(--nav-h);
   display: flex;
-  background: rgba(253,248,240,0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--warm1);
   flex-shrink: 0;
   position: relative; z-index: 50;
@@ -139,14 +138,14 @@ html, body {
 
 .nav-btn .nav-icon { font-size: 22px; transition: transform 0.18s; }
 .nav-btn .nav-label { font-size: 10px; color: var(--text-light); transition: color 0.18s; }
-.nav-btn.active .nav-label { color: var(--accent); font-weight: 500; }
+.nav-btn.active .nav-label { color: var(--text-dark); font-weight: 600; }
 .nav-btn.active .nav-icon { transform: scale(1.1); }
 .nav-btn.active::after {
   content: '';
   position: absolute;
   top: 6px; left: 50%; transform: translateX(-50%);
   width: 24px; height: 3px;
-  background: var(--accent);
+  background: var(--text-dark);
   border-radius: 0 0 3px 3px;
 }
 .nav-btn:active .nav-icon { transform: scale(0.9); }
@@ -156,7 +155,7 @@ html, body {
 
 .meal-tabs {
   display: flex;
-  background: var(--warm0);
+  background: #ffffff;
   border-bottom: 1px solid var(--warm1);
   position: sticky; top: 0; z-index: 20;
 }
@@ -181,7 +180,7 @@ html, body {
   display: flex; align-items: center; gap: 10px;
   padding: 12px 16px 8px;
   position: sticky; top: 45px; z-index: 19;
-  background: rgba(253,248,240,0.9);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -230,18 +229,18 @@ html, body {
 
 .filter-chip {
   flex-shrink: 0;
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1.5px solid var(--warm2);
-  background: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--warm2);
+  background: white;
   font-size: 12px; color: var(--text-mid);
-  cursor: pointer; transition: all 0.15s;
+  cursor: pointer; transition: all 0.12s;
   font-family: 'Noto Sans SC', sans-serif;
   white-space: nowrap;
 }
 .filter-chip.active {
-  background: var(--warm3);
-  border-color: var(--warm3);
+  background: var(--text-dark);
+  border-color: var(--text-dark);
   color: white;
 }
 
@@ -272,12 +271,13 @@ html, body {
   cursor: pointer;
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   position: relative;
-  background: var(--warm2);
-  transition: transform 0.15s;
+  background: var(--warm1);
+  transition: transform 0.12s, box-shadow 0.12s;
+  border: 1px solid var(--warm1);
 }
-.card-wrapper:active { transform: scale(0.97); }
+.card-wrapper:active { transform: scale(0.98); box-shadow: var(--shadow-md); }
 .recipe-grid.single-col .card-wrapper { height: 280px; }
 
 .card-img {
@@ -297,7 +297,7 @@ html, body {
 
 .card-overlay {
   position: absolute; bottom: 0; left: 0; right: 0;
-  background: linear-gradient(transparent, rgba(40,20,5,0.75));
+  background: linear-gradient(transparent, rgba(0,0,0,0.65));
   padding: 28px 12px 12px;
 }
 .card-name {
@@ -325,18 +325,20 @@ html, body {
 
 .card-fav {
   position: absolute; top: 8px; right: 8px;
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   border-radius: 50%;
   border: none;
-  background: rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.30);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: white;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
-  z-index: 10;
+  z-index: 20;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .card-fav.active { background: rgba(220,50,50,0.8); }
 .card-fav:active { transform: scale(0.85); }
@@ -344,49 +346,54 @@ html, body {
 .card-meal-badge {
   position: absolute; top: 8px; left: 8px;
   font-size: 10px;
-  background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(8px);
-  color: white;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(4px);
+  color: var(--text-dark);
+  font-weight: 500;
   padding: 3px 8px;
-  border-radius: 10px;
+  border-radius: 4px;
   z-index: 5;
 }
 
 /* ===== DETAIL PAGE ===== */
 #page-detail {
-  background: var(--cream);
+  background: #ffffff;
 }
-.detail-img-area {
-  position: relative;
+.detail-img-strip {
   width: 100%;
-  background: #1a1008;
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  background: #0e0a14;
+  scrollbar-width: none;
   flex-shrink: 0;
 }
-.detail-img-area img {
-  display: block;
-  width: 100%; height: auto;
+.detail-img-strip::-webkit-scrollbar { display: none; }
+.detail-img-strip img {
+  flex-shrink: 0;
+  width: 100vw;
   max-height: 75vh;
   object-fit: contain;
-  opacity: 0; transition: opacity 0.35s;
-  user-select: none;
+  scroll-snap-align: start;
+  display: block;
 }
-.detail-img-area img.active { opacity: 1; }
 .detail-img-placeholder {
-  width: 100%; height: 100%;
+  width: 100%; min-height: 200px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: var(--warm1);
+  min-width: 100vw;
   color: var(--warm4); font-size: 52px; gap: 8px;
 }
 .detail-img-placeholder span { font-size: 14px; color: var(--text-mid); }
-.detail-swipe-hint {
-  position: absolute; bottom: 10px; left: 0; right: 0;
-  display: flex; justify-content: center; gap: 6px; z-index: 3;
+.detail-img-count {
+  position: absolute; top: 12px; right: 52px;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+  color: white; font-size: 12px;
+  padding: 4px 10px; border-radius: 12px;
+  z-index: 10;
 }
-.detail-swipe-hint span {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: rgba(255,255,255,0.45);
-  transition: background 0.2s, transform 0.2s;
-}
-.detail-swipe-hint span.active { background: white; transform: scale(1.3); }
 
 .detail-back-btn {
   position: absolute; top: 12px; left: 12px;
@@ -422,8 +429,12 @@ html, body {
   font-family: 'Noto Serif SC', serif;
   font-size: 22px; font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   line-height: 1.3;
+}
+.detail-time {
+  font-size: 15px; color: var(--text-mid);
+  font-weight: 500; margin-bottom: 10px;
 }
 .detail-meta {
   display: flex; flex-wrap: wrap; gap: 8px;
@@ -432,9 +443,10 @@ html, body {
 .detail-meta-chip {
   display: flex; align-items: center; gap: 4px;
   font-size: 12px; color: var(--text-mid);
-  background: var(--warm1);
-  padding: 5px 12px; border-radius: 20px;
-  font-weight: 500;
+  background: var(--warm0);
+  border: 1px solid var(--warm1);
+  padding: 4px 10px; border-radius: 4px;
+  font-weight: 400;
 }
 .detail-tags {
   display: flex; flex-wrap: wrap; gap: 6px;
@@ -448,11 +460,11 @@ html, body {
   padding: 3px 10px; border-radius: 12px;
 }
 .detail-section-title {
-  font-size: 11px; font-weight: 700;
-  color: var(--warm3);
-  text-transform: uppercase; letter-spacing: 1px;
-  margin: 16px 0 8px;
-  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase; letter-spacing: 0.8px;
+  margin: 20px 0 8px;
+  display: flex; align-items: center; gap: 8px;
 }
 .detail-section-title::after {
   content: ''; flex: 1; height: 1px; background: var(--warm1);
@@ -483,14 +495,16 @@ html, body {
   display: flex; gap: 10px; margin-top: 20px;
 }
 .detail-action-btn {
-  flex: 1; padding: 13px;
-  border-radius: var(--radius-sm); border: none;
-  font-size: 14px; font-weight: 600;
+  flex: 1; padding: 12px;
+  border-radius: var(--radius-sm); border: 1px solid var(--warm1);
+  font-size: 14px; font-weight: 500;
   font-family: 'Noto Sans SC', sans-serif;
-  cursor: pointer; transition: all 0.15s;
+  cursor: pointer; transition: all 0.12s;
+  background: white;
 }
-.detail-action-btn.edit { background: var(--warm1); color: var(--warm4); }
-.detail-action-btn.delete { background: #fff0f0; color: var(--red); }
+.detail-action-btn.edit { color: var(--text-dark); }
+.detail-action-btn.delete { color: var(--red); border-color: #fce4e4; }
+.detail-action-btn:active { background: var(--warm0); }
 .detail-action-btn:active { transform: scale(0.97); }
 
 .back-section-title {
@@ -535,82 +549,109 @@ html, body {
 /* ===== AI PAGE ===== */
 #page-ai { padding: 16px; }
 
+/* ====== AI PAGE - Instagram style ====== */
 .ai-header {
-  text-align: center;
-  padding: 20px 0 24px;
+  padding: 24px 16px 20px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--warm1);
 }
-.ai-icon { font-size: 48px; margin-bottom: 8px; }
+.ai-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, #e07b54, #a05c35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; flex-shrink: 0;
+  box-shadow: 0 0 0 3px var(--warm1), 0 0 0 5px var(--warm2);
+}
+.ai-header-text {}
 .ai-title {
   font-family: 'Noto Serif SC', serif;
-  font-size: 22px; font-weight: 700;
-  color: var(--warm4);
-  margin-bottom: 6px;
+  font-size: 16px; font-weight: 700;
+  color: var(--text-dark);
 }
-.ai-subtitle { font-size: 13px; color: var(--text-light); }
+.ai-subtitle { font-size: 12px; color: var(--text-light); margin-top: 2px; }
 
-.ai-chat {
-  background: var(--card-bg);
+.start-chat-btn {
+  width: 100%;
+  padding: 13px;
   border-radius: var(--radius);
-  padding: 16px;
+  border: 1.5px solid var(--warm2);
+  background: white;
+  color: var(--warm4);
+  font-size: 15px; font-weight: 700;
+  font-family: 'Noto Sans SC', sans-serif;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
   margin-bottom: 16px;
   box-shadow: var(--shadow-sm);
-  min-height: 120px;
-  max-height: 300px;
-  overflow-y: auto;
+}
+.start-chat-btn:active { background: var(--warm0); transform: scale(0.98); }
+
+.ai-chat {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 8px;
+  min-height: 80px;
 }
 
 .chat-msg {
-  margin-bottom: 12px;
-  animation: fadeUp 0.3s ease;
+  margin-bottom: 14px;
+  animation: fadeUp 0.25s ease;
+  display: flex;
+  gap: 8px;
 }
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.chat-msg.user { flex-direction: row-reverse; }
+
+.chat-avatar-sm {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  margin-top: 2px;
+}
+.chat-msg.ai .chat-avatar-sm { background: linear-gradient(135deg, #e07b54, #a05c35); }
+.chat-msg.user .chat-avatar-sm { background: var(--warm1); }
 
 .chat-bubble {
   display: inline-block;
   padding: 10px 14px;
-  border-radius: 16px;
+  border-radius: 18px;
   font-size: 14px;
   line-height: 1.6;
-  max-width: 90%;
+  max-width: 78%;
 }
 .chat-msg.ai .chat-bubble {
-  background: var(--warm1);
+  background: var(--card-bg);
   color: var(--text-dark);
-  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+  box-shadow: var(--shadow-sm);
 }
 .chat-msg.user .chat-bubble {
-  background: var(--warm3);
+  background: linear-gradient(135deg, var(--warm3), var(--warm4));
   color: white;
-  border-bottom-right-radius: 4px;
-  float: right;
+  border-top-right-radius: 4px;
 }
-.chat-msg.user { text-align: right; }
-.chat-msg::after { content: ''; display: table; clear: both; }
-
-.chat-label {
-  font-size: 11px; color: var(--text-light);
-  margin-bottom: 4px;
-}
-.chat-msg.user .chat-label { text-align: right; }
+.chat-msg::after { display: none; }
 
 .ai-input-area {
   display: flex; gap: 8px; align-items: flex-end;
-  margin-bottom: 16px;
+  padding: 10px 0 4px;
+  border-top: 1px solid var(--warm1);
+  margin-bottom: 12px;
 }
 .ai-input {
   flex: 1;
   background: var(--card-bg);
-  border: 1.5px solid var(--warm2);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
+  border: 1.5px solid var(--warm1);
+  border-radius: 22px;
+  padding: 10px 16px;
   font-size: 14px; font-family: 'Noto Sans SC', sans-serif;
   color: var(--text-dark);
   resize: none; outline: none;
   min-height: 44px; max-height: 100px;
-  box-shadow: var(--shadow-sm);
   transition: border-color 0.18s;
 }
 .ai-input:focus { border-color: var(--warm3); }
@@ -618,7 +659,7 @@ html, body {
 .send-btn {
   width: 44px; height: 44px;
   border-radius: 50%; border: none;
-  background: var(--warm3);
+  background: linear-gradient(135deg, var(--warm3), var(--warm4));
   color: white; font-size: 18px;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
@@ -627,93 +668,86 @@ html, body {
   box-shadow: var(--shadow-sm);
 }
 .send-btn:active { transform: scale(0.9); }
-.send-btn:disabled { background: var(--warm2); cursor: not-allowed; }
+.send-btn:disabled { background: var(--warm2); cursor: not-allowed; box-shadow: none; }
 
 .mic-btn {
   width: 44px; height: 44px;
   border-radius: 50%; border: none;
-  background: var(--warm1);
+  background: var(--warm0);
+  border: 1.5px solid var(--warm1);
   color: var(--warm4); font-size: 18px;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.18s;
   flex-shrink: 0;
 }
-.mic-btn.recording { background: #ffe0e0; color: var(--red); animation: pulse 1s infinite; }
-@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+.mic-btn.recording { background: #ffe0e0; color: var(--red); animation: pulse 1s infinite; border-color: var(--red); }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
-.start-chat-btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: var(--radius);
-  border: none;
-  background: linear-gradient(135deg, var(--warm3) 0%, var(--warm4) 100%);
-  color: white;
-  font-size: 16px; font-weight: 600;
-  font-family: 'Noto Serif SC', serif;
-  cursor: pointer;
-  box-shadow: var(--shadow-md);
-  transition: all 0.2s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  margin-bottom: 20px;
-}
-.start-chat-btn:active { transform: scale(0.97); }
-
-/* Recommended cards */
-.ai-results { margin-top: 4px; }
+/* Recommended cards - Instagram post style */
+.ai-results { margin-top: 8px; }
 .ai-results-title {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 16px; font-weight: 600;
-  color: var(--warm4);
+  font-size: 13px; font-weight: 600;
+  color: var(--text-light);
   margin-bottom: 12px;
-  display: flex; align-items: center; gap: 6px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ai-results-title::before, .ai-results-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--warm1);
 }
 
 .recommended-card {
   background: var(--card-bg);
   border-radius: var(--radius);
-  margin-bottom: 12px;
-  box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
   overflow: hidden;
-  border: 2px solid transparent;
-  transition: border-color 0.2s;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--warm1);
   animation: fadeUp 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.15s;
 }
-.recommended-card.highlighted { border-color: var(--warm3); }
+.recommended-card:active { transform: scale(0.99); }
 
-.rec-card-inner {
-  display: flex; height: 90px;
+.rec-card-img-top {
+  width: 100%; height: 200px;
+  object-fit: cover; display: block;
 }
-.rec-card-img {
-  width: 90px; flex-shrink: 0;
-  object-fit: cover;
-}
-.rec-card-img-placeholder {
-  width: 90px; flex-shrink: 0;
+.rec-card-img-top-placeholder {
+  width: 100%; height: 160px;
   background: linear-gradient(135deg, var(--warm1), var(--warm2));
   display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
+  font-size: 48px;
 }
-.rec-card-info {
-  flex: 1; padding: 10px 12px;
-  display: flex; flex-direction: column; justify-content: center;
+.rec-card-body {
+  padding: 12px 14px 14px;
+}
+.rec-card-top-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
 }
 .rec-card-name {
   font-family: 'Noto Serif SC', serif;
-  font-size: 15px; font-weight: 600;
+  font-size: 16px; font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 4px;
+}
+.rec-card-time {
+  font-size: 12px; color: var(--warm3);
+  font-weight: 600; background: var(--warm0);
+  padding: 3px 10px; border-radius: 12px;
+  white-space: nowrap;
 }
 .rec-card-meta {
-  font-size: 11px; color: var(--text-light);
-  display: flex; gap: 8px;
+  font-size: 12px; color: var(--text-light);
+  margin-bottom: 8px;
+  display: flex; gap: 10px; flex-wrap: wrap;
 }
 .rec-card-reason {
-  font-size: 12px; color: var(--text-mid);
-  padding: 8px 12px;
-  background: var(--warm0);
+  font-size: 13px; color: var(--text-mid);
+  line-height: 1.6;
+  padding-top: 8px;
   border-top: 1px solid var(--warm1);
-  font-style: italic;
 }
 
 .ai-suggestion-text {
@@ -728,26 +762,28 @@ html, body {
 }
 
 /* History */
-.history-section { margin-top: 24px; }
+.history-section { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--warm1); }
 .history-title {
-  font-size: 14px; font-weight: 600; color: var(--text-mid);
-  margin-bottom: 10px;
+  font-size: 12px; font-weight: 700; color: var(--text-light);
+  margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;
   display: flex; justify-content: space-between; align-items: center;
 }
 .clear-history-btn {
-  font-size: 12px; color: var(--text-light);
-  background: none; border: none; cursor: pointer;
+  font-size: 12px; color: var(--warm3);
+  background: none; border: none; cursor: pointer; font-weight: 600;
 }
 .history-item {
-  background: var(--card-bg);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  margin-bottom: 8px;
-  box-shadow: var(--shadow-sm);
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--warm0);
   cursor: pointer;
 }
-.history-item-date { font-size: 11px; color: var(--text-light); margin-bottom: 4px; }
-.history-item-names { font-size: 13px; color: var(--text-dark); }
+.history-item-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--warm2); flex-shrink: 0;
+}
+.history-item-date { font-size: 11px; color: var(--text-light); white-space: nowrap; }
+.history-item-names { font-size: 13px; color: var(--text-dark); flex: 1; }
 
 /* ===== ADD PAGE ===== */
 #page-add { padding: 16px; }
@@ -785,7 +821,7 @@ html, body {
 .form-input, .form-textarea, .form-select {
   width: 100%;
   padding: 10px 14px;
-  border: 1.5px solid var(--warm1);
+  border: 1px solid var(--warm2);
   border-radius: var(--radius-sm);
   font-size: 14px;
   font-family: 'Noto Sans SC', sans-serif;
@@ -795,7 +831,7 @@ html, body {
   transition: border-color 0.18s;
   -webkit-appearance: none;
 }
-.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--warm3); }
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--text-dark); box-shadow: 0 0 0 2px rgba(55,53,47,0.08); }
 .form-textarea { resize: none; min-height: 80px; line-height: 1.6; }
 
 .select-row { display: flex; gap: 8px; }
@@ -803,8 +839,8 @@ html, body {
 
 /* Image upload */
 .img-upload-area {
-  border: 2px dashed var(--warm2);
-  border-radius: var(--radius);
+  border: 1.5px dashed var(--warm2);
+  border-radius: var(--radius-sm);
   padding: 20px;
   text-align: center;
   cursor: pointer;
@@ -903,7 +939,7 @@ html, body {
 .scan-btn {
   width: 100%; padding: 10px;
   border-radius: var(--radius-sm); border: none;
-  background: var(--warm3); color: white;
+  background: var(--text-dark); color: white;
   font-size: 14px; font-weight: 600;
   font-family: 'Noto Sans SC', sans-serif;
   cursor: pointer; transition: all 0.15s;
@@ -916,7 +952,7 @@ html, body {
 .tags-input-area {
   display: flex; flex-wrap: wrap; gap: 6px;
   padding: 8px;
-  border: 1.5px solid var(--warm1);
+  border: 1px solid var(--warm2);
   border-radius: var(--radius-sm);
   background: white;
   min-height: 44px;
@@ -983,7 +1019,7 @@ html, body {
   padding: 15px;
   border-radius: var(--radius);
   border: none;
-  background: linear-gradient(135deg, var(--warm3) 0%, var(--warm4) 100%);
+  background: var(--text-dark);
   color: white;
   font-size: 16px; font-weight: 700;
   font-family: 'Noto Serif SC', serif;
@@ -1048,7 +1084,7 @@ html, body {
 .api-key-input {
   width: 100%;
   padding: 10px 14px;
-  border: 1.5px solid var(--warm1);
+  border: 1px solid var(--warm2);
   border-radius: var(--radius-sm);
   font-size: 13px;
   font-family: 'Noto Sans SC', sans-serif;
@@ -1240,7 +1276,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 <div id="app">
   <!-- HEADER -->
   <div id="header">
-    <div class="header-title" id="header-title">➕ 添加菜谱</div>
+    <div class="header-title" id="header-title">🍱 今天吃什么</div>
     <div class="header-right" id="header-right">
       <button class="icon-btn" onclick="showSearch()" id="search-toggle-btn" title="搜索">🔍</button>
     </div>
@@ -1250,7 +1286,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
   <div id="pages">
 
     <!-- HOME -->
-    <div class="page" id="page-home">
+    <div class="page active" id="page-home">
       <div class="meal-tabs">
         <button class="meal-tab active" onclick="setMealTab(&#39;breakfast&#39;)" id="tab-breakfast">☀️ 早饭</button>
         <button class="meal-tab" onclick="setMealTab(&#39;dinner&#39;)" id="tab-dinner">🌙 晚饭</button>
@@ -1285,48 +1321,52 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
     </div>
 
     <!-- AI -->
-    <div class="page" id="page-ai">
+    <div class="page" id="page-ai" style="padding:0">
       <div class="ai-header">
-        <div class="ai-icon">🤖</div>
-        <div class="ai-title">AI 帮你选菜</div>
-        <div class="ai-subtitle">告诉我你的需求，我来推荐</div>
-      </div>
-
-      <div id="ai-no-key" style="display: block;">
-        <div style="background:#fff8f0;border-radius:16px;padding:16px;text-align:center;margin-bottom:16px;border:1.5px solid var(--warm2)">
-          <div style="font-size:32px;margin-bottom:8px">🔑</div>
-          <div style="font-size:14px;color:var(--text-mid);margin-bottom:10px">需要先设置 API Key 才能使用 AI 功能</div>
-          <button onclick="goToSettings()" style="padding:8px 20px;border-radius:10px;border:none;background:var(--warm3);color:white;font-size:13px;cursor:pointer">去设置 →</button>
+        <div class="ai-avatar">🍱</div>
+        <div class="ai-header-text">
+          <div class="ai-title">今日厨神助手</div>
+          <div class="ai-subtitle">根据你的食材和心情，帮你选菜 ✨</div>
         </div>
       </div>
 
-      <div id="ai-main" style="display: none;">
-        <button class="start-chat-btn" onclick="startAIChat()" id="start-chat-btn">
-          <span>✨</span> 开始今日推荐
-        </button>
-
-        <div class="ai-chat" id="ai-chat" style="display:none"></div>
-
-        <div class="ai-input-area" id="ai-input-area" style="display:none">
-          <button class="mic-btn" id="ai-mic-btn" onclick="toggleAIMic()" title="语音输入">🎤</button>
-          <textarea class="ai-input" id="ai-input" placeholder="输入你的回答..." rows="1" onkeydown="if(event.key===&#39;Enter&#39;&amp;&amp;!event.shiftKey){event.preventDefault();sendAIMessage()}"></textarea>
-          <button class="send-btn" onclick="sendAIMessage()" id="ai-send-btn">➤</button>
-        </div>
-
-        <div id="ai-results" class="ai-results" style="display:none"></div>
-
-        <div class="history-section" id="history-section" style="display:none">
-          <div class="history-title">
-            <span>📋 历史推荐</span>
-            <button class="clear-history-btn" onclick="clearHistory()">清除</button>
+      <div style="padding:16px">
+        <div id="ai-no-key" style="display: block;">
+          <div style="background:#fff8f0;border-radius:16px;padding:20px;text-align:center;margin-bottom:16px;border:1.5px solid var(--warm2)">
+            <div style="font-size:36px;margin-bottom:8px">🔑</div>
+            <div style="font-size:14px;color:var(--text-mid);margin-bottom:12px">需要先设置 API Key 才能使用 AI 功能</div>
+            <button onclick="goToSettings()" style="padding:10px 24px;border-radius:12px;border:none;background:var(--warm3);color:white;font-size:14px;cursor:pointer;font-weight:600">去设置 →</button>
           </div>
-          <div id="history-list"></div>
+        </div>
+
+        <div id="ai-main" style="display: none;">
+          <button class="start-chat-btn" onclick="startAIChat()" id="start-chat-btn">
+            <span>✨</span> 开始今日推荐
+          </button>
+
+          <div class="ai-chat" id="ai-chat" style="display:none"></div>
+
+          <div class="ai-input-area" id="ai-input-area" style="display:none">
+            <button class="mic-btn" id="ai-mic-btn" onclick="toggleAIMic()" title="语音输入">🎤</button>
+            <textarea class="ai-input" id="ai-input" placeholder="说说你有什么食材，或者想吃什么..." rows="1" onkeydown="if(event.key===&#39;Enter&#39;&amp;&amp;!event.shiftKey){event.preventDefault();sendAIMessage()}"></textarea>
+            <button class="send-btn" onclick="sendAIMessage()" id="ai-send-btn">➤</button>
+          </div>
+
+          <div id="ai-results" class="ai-results" style="display:none"></div>
+
+          <div class="history-section" id="history-section" style="display:none">
+            <div class="history-title">
+              <span>历史推荐</span>
+              <button class="clear-history-btn" onclick="clearHistory()">清除</button>
+            </div>
+            <div id="history-list"></div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- ADD -->
-    <div class="page active" id="page-add">
+    <div class="page" id="page-add">
       <div class="page-title" id="add-page-title">➕ 添加菜谱</div>
 
       <!-- Image -->
@@ -1546,10 +1586,11 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 
     <!-- DETAIL -->
     <div class="page" id="page-detail">
-      <div class="detail-img-area" id="detail-img-area">
+      <div style="position:relative;flex-shrink:0">
         <button class="detail-back-btn" onclick="closeDetail()">‹</button>
         <button class="detail-fav-btn" id="detail-fav-btn" onclick="toggleDetailFav()">♥</button>
-        <div class="detail-swipe-hint" id="detail-dots"></div>
+        <div id="detail-img-count" class="detail-img-count" style="display:none"></div>
+        <div class="detail-img-strip" id="detail-img-strip"></div>
       </div>
       <div class="detail-body" id="detail-body"></div>
     </div>
@@ -1558,7 +1599,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 
   <!-- BOTTOM NAV -->
   <div id="nav">
-    <button class="nav-btn" onclick="goToPage(&#39;home&#39;)" id="nav-home">
+    <button class="nav-btn active" onclick="goToPage(&#39;home&#39;)" id="nav-home">
       <span class="nav-icon">🏠</span>
       <span class="nav-label">菜谱库</span>
     </button>
@@ -1566,7 +1607,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
       <span class="nav-icon">🤖</span>
       <span class="nav-label">AI推荐</span>
     </button>
-    <button class="nav-btn active" onclick="goToPage(&#39;add&#39;)" id="nav-add">
+    <button class="nav-btn" onclick="goToPage(&#39;add&#39;)" id="nav-add">
       <span class="nav-icon">➕</span>
       <span class="nav-label">添加</span>
     </button>
@@ -1582,7 +1623,7 @@ button, .card-wrapper { -webkit-tap-highlight-color: transparent; }
 <div id="lightbox" onclick="closeLightbox(event)">
   <button id="lightbox-close" onclick="closeLightbox()">✕</button>
   <button class="lightbox-nav" id="lightbox-prev" onclick="lightboxNav(-1,event)">‹</button>
-  <img id="lightbox-img" src="file:///C:/Users/zwd89/Downloads/recipe-app_6.html">
+  <img id="lightbox-img" src="file:///C:/Users/zwd89/Downloads/recipe-app_7.html">
   <div id="lightbox-name"></div>
   <div id="lightbox-dots"></div>
   <div id="lightbox-hint">点击图片外关闭</div>
@@ -1719,11 +1760,10 @@ function cardHTML(r) {
   const tagsHTML = (r.tags || []).slice(0,2).map(t => `<span class="card-tag">${t}</span>`).join('');
   const methodsHTML = (r.methods || []).slice(0,2).map(m => `<span class="card-tag">${m}</span>`).join('');
 
-  return `<div class="card-wrapper" id="card-${r.id}">
-    <div class="card-tap-area" onclick="openDetail('${r.id}')" style="position:absolute;inset:0;z-index:1"></div>
+  return `<div class="card-wrapper" id="card-${r.id}" onclick="openDetail('${r.id}')">
     ${imgHTML}
-    <span class="card-meal-badge">${mealLabel}</span>
-    <button class="card-fav ${favClass}" onclick="event.stopPropagation();toggleFav('${r.id}')">♥</button>
+    <span class="card-meal-badge" style="pointer-events:none">${mealLabel}</span>
+    <button class="card-fav ${favClass}" id="fav-${r.id}" onclick="favClick(event,'${r.id}')">♥</button>
     <div class="card-overlay" style="pointer-events:none">
       <div class="card-name">${r.name}</div>
       <div class="card-tags">${methodsHTML}${tagsHTML}</div>
@@ -1765,50 +1805,53 @@ function openDetail(id) {
 
   // Images
   const imgs = r.imgs && r.imgs.length > 0 ? r.imgs : (r.img ? [r.img] : []);
-  const imgArea = document.getElementById('detail-img-area');
-
-  // Remove old imgs
-  imgArea.querySelectorAll('img').forEach(el => el.remove());
-  imgArea.querySelector('.detail-img-placeholder')?.remove();
+  const strip = document.getElementById('detail-img-strip');
+  strip.innerHTML = '';
 
   if (imgs.length === 0) {
-    const ph = document.createElement('div');
-    ph.className = 'detail-img-placeholder';
-    ph.innerHTML = `<span>${getCookingEmoji(r.methods)}</span><span>${r.name}</span>`;
-    imgArea.insertBefore(ph, imgArea.querySelector('.detail-swipe-hint'));
+    strip.innerHTML = `<div class="detail-img-placeholder"><span>${getCookingEmoji(r.methods)}</span><span>${r.name}</span></div>`;
   } else {
-    imgs.forEach((src, i) => {
+    imgs.forEach(src => {
       const img = document.createElement('img');
       img.src = src;
-      if (i === 0) img.classList.add('active');
-      imgArea.insertBefore(img, imgArea.querySelector('.detail-swipe-hint'));
+      strip.appendChild(img);
     });
   }
+  strip.scrollLeft = 0;
 
-  // Dots
-  const dotsEl = document.getElementById('detail-dots');
-  dotsEl.innerHTML = imgs.length > 1 ? imgs.map((_, i) =>
-    `<span class="${i===0?'active':''}"></span>`).join('') : '';
+  // Count badge
+  const countEl = document.getElementById('detail-img-count');
+  if (imgs.length > 1) {
+    countEl.textContent = `1 / ${imgs.length}`;
+    countEl.style.display = 'block';
+    strip.onscroll = () => {
+      const i = Math.round(strip.scrollLeft / strip.clientWidth) + 1;
+      countEl.textContent = `${Math.min(i, imgs.length)} / ${imgs.length}`;
+    };
+  } else {
+    countEl.style.display = 'none';
+    strip.onscroll = null;
+  }
 
   // Fav button
-  const favBtn = document.getElementById('detail-fav-btn');
-  favBtn.classList.toggle('active', !!r.favorite);
+  document.getElementById('detail-fav-btn').classList.toggle('active', !!r.favorite);
 
-  // Body
+  // Body - time shown prominently right under name
   const diffMap = {easy:'⭐ 简单', medium:'⭐⭐ 中等', hard:'⭐⭐⭐ 复杂'};
   const mealLabel = r.meal === 'breakfast' ? '☀️ 早饭' : r.meal === 'dinner' ? '🌙 晚饭' : '☀️🌙 两餐';
   const metaChips = [
     mealLabel,
-    r.time ? `⏱ ${r.time}分钟` : null,
     r.difficulty ? diffMap[r.difficulty] : null,
     r.taste ? `🌶 ${r.taste}` : null,
     ...(r.methods||[]).map(m => `🍳 ${m}`),
   ].filter(Boolean).map(m => `<span class="detail-meta-chip">${m}</span>`).join('');
 
+  const timeHTML = r.time ? `<div class="detail-time">⏱ ${r.time} 分钟</div>` : '';
   const tagsHTML = (r.tags||[]).length ? `<div class="detail-tags">${r.tags.map(t=>`<span class="detail-tag">${t}</span>`).join('')}</div>` : '';
 
   document.getElementById('detail-body').innerHTML = `
     <div class="detail-name">${r.name}</div>
+    ${timeHTML}
     <div class="detail-meta">${metaChips}</div>
     ${tagsHTML}
     ${r.ingredients ? `<div class="detail-section-title">食材</div><div class="detail-ingredients">${r.ingredients}</div>` : ''}
@@ -1820,30 +1863,11 @@ function openDetail(id) {
     </div>
   `;
 
-  // Swipe support
-  imgArea.ontouchstart = e => { touchStartX = e.touches[0].clientX; };
-  imgArea.ontouchend = e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 40) detailNavImg(dx < 0 ? 1 : -1);
-  };
-
   goToPage('detail');
   document.getElementById('header-title').textContent = '';
 }
 
-function detailNavImg(dir) {
-  const r = recipes.find(r => r.id === detailRecipeId);
-  if (!r) return;
-  const imgs = r.imgs && r.imgs.length > 0 ? r.imgs : (r.img ? [r.img] : []);
-  if (imgs.length <= 1) return;
-  const imgEls = document.getElementById('detail-img-area').querySelectorAll('img');
-  const dots = document.getElementById('detail-dots').querySelectorAll('span');
-  imgEls[detailImgIndex].classList.remove('active');
-  dots[detailImgIndex]?.classList.remove('active');
-  detailImgIndex = (detailImgIndex + dir + imgs.length) % imgs.length;
-  imgEls[detailImgIndex].classList.add('active');
-  dots[detailImgIndex]?.classList.add('active');
-}
+
 
 function closeDetail() {
   goToPage('home');
@@ -1914,6 +1938,36 @@ function lightboxFlipToRecipe() {
 }
 
 // ============ FAVORITE ============
+function favClick(e, id) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+  toggleFav(id);
+  return false;
+}
+
+// Bind fav buttons with touchend for iOS reliability
+document.addEventListener('touchend', function(e) {
+  const btn = e.target.closest('.card-fav');
+  if (!btn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  // Extract id from onclick attr like favClick(event,'123')
+  const onc = btn.getAttribute('onclick') || '';
+  const m = onc.match(/'([^']+)'\)/);
+  if (m) toggleFav(m[1]);
+}, { passive: false });
+
+function handleCardClick(e, id) {
+  const favBtn = e.target.closest('[data-fav-id]');
+  if (favBtn) {
+    e.stopPropagation();
+    toggleFav(favBtn.dataset.favId);
+    return;
+  }
+  openDetail(id);
+}
+
 function toggleFav(id) {
   const r = recipes.find(r => r.id === id);
   if (!r) return;
@@ -2238,16 +2292,14 @@ function saveRecipe() {
 
   if (editingId) {
     recipes = recipes.map(r => r.id === editingId ? recipe : r);
-    showToast('已更新！');
   } else {
     recipes.unshift(recipe);
-    showToast('菜谱已保存！🎉');
   }
 
   save();
   isSaving = false;
+  showToast(editingId ? '已更新！✓' : '菜谱已保存！🎉');
   resetAddForm();
-  // Stay on add page so user can add another recipe; scroll to top
   document.getElementById('page-add').scrollTop = 0;
 }
 
@@ -2499,36 +2551,41 @@ function addAIMessage(role, content) {
   const div = document.createElement('div');
   div.className = `chat-msg ${role}`;
   div.innerHTML = `
-    <div class="chat-label">${role === 'ai' ? '🤖 AI' : '👤 我'}</div>
+    <div class="chat-avatar-sm">${role === 'ai' ? '🍱' : '👤'}</div>
     <div class="chat-bubble">${content}</div>
   `;
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
+  return div;
 }
 
 function showRecommendations(recs, reason) {
   const resultsDiv = document.getElementById('ai-results');
   resultsDiv.style.display = 'block';
 
-  let html = `<div class="ai-results-title">✨ 为你推荐 ${recs.length} 道菜</div>`;
+  let html = `<div class="ai-results-title">为你推荐 ${recs.length} 道菜</div>`;
   if (reason) html += `<div class="ai-suggestion-text">💡 ${reason}</div>`;
 
   recs.forEach(r => {
-    const imgHTML = r.img
-      ? `<img class="rec-card-img" src="${r.img}" alt="${r.name}">`
-      : `<div class="rec-card-img-placeholder">${getCookingEmoji(r.methods)}</div>`;
+    const topImg = r.imgs && r.imgs.length > 0 ? r.imgs[0] : r.img;
+    const imgHTML = topImg
+      ? `<img class="rec-card-img-top" src="${topImg}" alt="${r.name}">`
+      : `<div class="rec-card-img-top-placeholder">${getCookingEmoji(r.methods)}</div>`;
+    const diffMap = {easy:'⭐ 简单', medium:'⭐⭐ 中等', hard:'⭐⭐⭐ 复杂'};
+    const metaParts = [
+      r.difficulty ? diffMap[r.difficulty] : null,
+      r.taste || null,
+      ...(r.methods||[]).map(m=>`🍳 ${m}`),
+    ].filter(Boolean).join('  ·  ');
 
-    html += `<div class="recommended-card highlighted" onclick="scrollToCard('${r.id}')">
-      <div class="rec-card-inner">
-        ${imgHTML}
-        <div class="rec-card-info">
+    html += `<div class="recommended-card" onclick="openDetail('${r.id}')">
+      ${imgHTML}
+      <div class="rec-card-body">
+        <div class="rec-card-top-row">
           <div class="rec-card-name">${r.name}</div>
-          <div class="rec-card-meta">
-            ${r.time ? `⏱ ${r.time}分钟` : ''}
-            ${r.difficulty ? `${'⭐'.repeat(r.difficulty==='easy'?1:r.difficulty==='medium'?2:3)}` : ''}
-            ${r.taste || ''}
-          </div>
+          ${r.time ? `<div class="rec-card-time">⏱ ${r.time}分钟</div>` : ''}
         </div>
+        ${metaParts ? `<div class="rec-card-meta">${metaParts}</div>` : ''}
       </div>
     </div>`;
   });
@@ -2560,17 +2617,16 @@ function saveToHistory(recs) {
 }
 
 function renderHistory() {
-  if (aiHistory.length === 0) {
-    document.getElementById('history-section').style.display = 'none';
-    return;
-  }
-  document.getElementById('history-section').style.display = 'block';
-  document.getElementById('history-list').innerHTML = aiHistory.slice(0, 5).map(h => `
+  const section = document.getElementById('history-section');
+  const list = document.getElementById('history-list');
+  if (!aiHistory.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  list.innerHTML = aiHistory.map(h => `
     <div class="history-item">
-      <div class="history-item-date">📅 ${h.date}</div>
+      <div class="history-item-dot"></div>
       <div class="history-item-names">${h.names}</div>
-    </div>
-  `).join('');
+      <div class="history-item-date">${h.date}</div>
+    </div>`).join('');
 }
 
 function clearHistory() {
